@@ -1,0 +1,149 @@
+#include "form.h"
+#include "ui_form.h"
+#include <QGraphicsDropShadowEffect>
+#include <QPainter>
+#include "formitem.h"
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QFontDialog>
+Form::Form(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Form)
+{
+    ui->setupUi(this);
+
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
+    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+    connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem *, int)),this,SLOT(onItemClicked(QTreeWidgetItem *, int)));
+    connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
+    ui->treeWidget->setTreePosition(2);
+
+    ui->listWidget->setViewMode(QListWidget::IconMode);
+    ui->listWidget->setFlow(QListWidget::LeftToRight);
+    ui->listWidget->setWrapping(true);
+    ui->listWidget->setResizeMode(QListView::Adjust);
+    ui->listWidget->setSpacing(0);
+    for(int i=0;i<6;i++)
+    {
+        auto form=new FormItem;
+        auto item=new QListWidgetItem;
+        item->setSizeHint(form->size());
+        ui->listWidget->addItem(item);
+        ui->listWidget->setItemWidget(item,form);
+    }
+    setStyleSheet("QListWidget::item{background:#666666;margin-right:0px;margin-left:0px;margin-top:10px;padding:0px;}"
+                  "QLabel{padding:0px;margin:0px;border-width:0px;background-color:yellow;}"
+                  "QPushButton{padding:0px;margin:0px;}"
+                  "QScrollBar:vertical{width:10px;}");
+//    ui->pushButton->setStyleSheet("font:50px Light;");
+}
+
+Form::~Form()
+{
+    delete ui;
+}
+
+void Form::onItemClicked(QTreeWidgetItem *item, int column)
+{
+
+    item->setBackgroundColor(0,Qt::black);
+}
+
+void Form::onFont()
+{
+    bool isok=false;
+    QFont f=QFontDialog::getFont(&isok,this->font());
+    if(isok)ui->pushButton->setFont(f);
+    qDebug()<<f;
+    update();
+}
+
+void Form::paintEvent(QPaintEvent *e)
+{
+    ///params config
+    int shadowSize=15;
+    int radSize=0;
+    QColor borderColor("#aaaaaa");
+    QColor backgroundColor("#ffffff");
+    QVector<QVector<double>> gradientCurve={{0,150},{0.2,75},{0.75,10},{1,0}};
+    ///end params config
+
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.setRenderHint(QPainter::Antialiasing);
+    auto setGradient=[&](QGradient*g){
+        for(auto id:gradientCurve)
+        {
+            borderColor.setAlpha((int)id[1]);
+            g->setColorAt(id[0],borderColor);
+        }
+    };
+    shadowSize+=radSize;
+#if 1 //left
+    QRectF rectLeft(0, 0, shadowSize*2, shadowSize*2);
+    int startAngle = 90 * 16;
+    int spanAngle = 90 * 16;
+    QRadialGradient radialGradient(rectLeft.center(), rectLeft.width()*0.5,rectLeft.center());
+    setGradient(&radialGradient);
+    painter.setBrush(QBrush(radialGradient));
+    painter.drawPie(rectLeft,startAngle,spanAngle);
+    QLinearGradient lgLeft(shadowSize,0,0,0);
+    setGradient(&lgLeft);
+    painter.setBrush(QBrush(lgLeft));
+    painter.drawRect(QRect(0,shadowSize,shadowSize,this->height()-shadowSize*2));
+#endif
+
+#if 1//right
+    QRectF rectRight(width()-shadowSize*2, height()-shadowSize*2, shadowSize*2, shadowSize*2);
+    QRadialGradient rgRight(rectRight.center(), rectRight.width()*0.5,rectRight.center());
+
+    setGradient(&rgRight);
+    painter.setBrush(QBrush(rgRight));
+    painter.drawPie(rectRight,270*16,90*16);
+    QLinearGradient lgRight(width()-shadowSize,0,width(),0);
+
+    setGradient(&lgRight);
+    painter.setBrush(QBrush(lgRight));
+    painter.drawRect(QRect(width()-shadowSize,shadowSize,shadowSize,this->height()-shadowSize*2));
+#endif
+
+
+#if 1 //top
+    QRectF rectTop(width()-shadowSize*2, 0, shadowSize*2, shadowSize*2);
+    QRadialGradient rgTop(rectTop.center(), rectTop.width()*0.5,rectTop.center());
+
+    setGradient(&rgTop);
+    painter.setBrush(QBrush(rgTop));
+    painter.drawPie(rectTop,0*16,90*16);
+    QLinearGradient lgTop(0,shadowSize,0,0);
+
+    setGradient(&lgTop);
+    painter.setBrush(QBrush(lgTop));
+    painter.drawRect(QRect(shadowSize,0,this->width()-2*shadowSize,shadowSize));
+#endif
+
+#if 1 //bottom
+    QRectF rectBottom(0, height()-2*shadowSize, shadowSize*2, shadowSize*2);
+    QRadialGradient rgBottom(rectBottom.center(), rectBottom.width()*0.5,rectBottom.center());
+
+    setGradient(&rgBottom);
+    painter.setBrush(QBrush(rgBottom));
+    painter.drawPie(rectBottom,180*16,90*16);
+    QLinearGradient lgBottom(0,height()-shadowSize,0,height());
+
+    setGradient(&lgBottom);
+    painter.setBrush(QBrush(lgBottom));
+    painter.drawRect(QRect(shadowSize,height()-shadowSize,this->width()-2*shadowSize,shadowSize));
+#endif
+
+
+    int adj=shadowSize-radSize;
+    QRect inner=rect().adjusted(adj,adj,-adj,-adj);
+    painter.setBrush(backgroundColor);
+#if 1 //normal
+    painter.drawRect(inner);
+#else
+    painter.drawRoundRect(inner,radSize,radSize);
+#endif
+
+}
