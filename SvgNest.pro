@@ -27,6 +27,7 @@ include(geometry/geometry.pri)
 include(RectangleBinPack/binpack.pri)
 SOURCES += \
         CListWidget.cpp \
+        CTreeView.cpp \
         form.cpp \
         formitem.cpp \
         main.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
 
 HEADERS += \
         CListWidget.h \
+        CTreeView.h \
         ctest.hpp \
         form.h \
         formitem.h \

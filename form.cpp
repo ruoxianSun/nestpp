@@ -6,6 +6,8 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QFontDialog>
+#include <QFontMetrics>
+#include <QStandardItemModel>
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
@@ -14,9 +16,44 @@ Form::Form(QWidget *parent) :
 
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-    connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem *, int)),this,SLOT(onItemClicked(QTreeWidgetItem *, int)));
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
-    ui->treeWidget->setTreePosition(2);
+
+
+
+    model = new QStandardItemModel(ui->treeView);
+    ui->treeView->setModel(model);
+    ui->treeView->setTreePosition(1);
+
+    model->setHorizontalHeaderLabels(QStringList()
+                                     <<QStringLiteral("Project")
+                                     <<QStringLiteral("tag1")
+                                     <<QStringLiteral("tag2")
+                                     <<QStringLiteral("tag3")
+                                     <<QStringLiteral("tag4")
+                                     <<QStringLiteral("tag5"));
+    QStandardItem * item = new QStandardItem(tr("item one"));
+
+    model->setItem(0,1,item);
+    model->setItem(0,0,new QStandardItem(""));
+    model->setItem(1,1,new QStandardItem(tr("item two")));
+    model->setItem(2,1,new QStandardItem(tr("item three")));
+    model->item(0,0)->setChild(0,0,new QStandardItem(tr("")));
+    model->item(0,0)->setChild(0,1,new QStandardItem(tr("item four")));
+    QList<QStandardItem*> list = model->findItems(tr("item two"));
+
+
+    for(int i = 0;i<list.length();i++)
+    {
+        QStandardItem* item = list.at(i);
+        model->setItem(item->row(),2,new QStandardItem(tr("item two msg")));
+    }
+
+
+
+
+
+
+
 
     ui->listWidget->setViewMode(QListWidget::IconMode);
     ui->listWidget->setFlow(QListWidget::LeftToRight);
@@ -31,11 +68,10 @@ Form::Form(QWidget *parent) :
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item,form);
     }
-    setStyleSheet("QListWidget::item{background:#666666;margin-right:0px;margin-left:0px;margin-top:10px;padding:0px;}"
-                  "QLabel{padding:0px;margin:0px;border-width:0px;background-color:yellow;}"
+    setStyleSheet("QListWidget::item{border:0px;background:#666666;margin-right:0px;margin-left:0px;margin-top:10px;padding:0px;}"
+                  "QLabel{padding:0px;margin:0px;border-width:0px;}"
                   "QPushButton{padding:0px;margin:0px;}"
-                  "QScrollBar:vertical{width:10px;}");
-//    ui->pushButton->setStyleSheet("font:50px Light;");
+                  "QScrollBar:vertical{width:10px;margin:0px;border:0px;padding:0px;}");
 }
 
 Form::~Form()
@@ -46,7 +82,6 @@ Form::~Form()
 void Form::onItemClicked(QTreeWidgetItem *item, int column)
 {
 
-    item->setBackgroundColor(0,Qt::black);
 }
 
 void Form::onFont()
@@ -56,6 +91,10 @@ void Form::onFont()
     if(isok)ui->pushButton->setFont(f);
     qDebug()<<f;
     update();
+    QFontMetrics met(this->font());
+    qDebug()<<"label height:"<<ui->label->height()<<", font height:"<<met.height();
+    qDebug()<<"ascent:"<<met.ascent()<<" ,descent:"<<met.descent()<<" ,overline pos:"<<met.overlinePos()
+           <<",cap height:"<<met.capHeight()<<",height:"<<met.boundingRect("HH").height()<<",tight height:"<<met.tightBoundingRect("HH").height();
 }
 
 void Form::paintEvent(QPaintEvent *e)

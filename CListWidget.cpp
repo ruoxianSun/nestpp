@@ -3,7 +3,9 @@
 
 
 QRect CListWidget::visualRect(const QModelIndex &index) const{
+//    qDebug()<<"viewport:"<<viewport()->rect();
     QRect rect= QListView::visualRect(index);
+//    qDebug()<<"item:"<<rect;
     if(index.row()%2==1)
     {
         QRect raw=rect;

@@ -1,4 +1,5 @@
 
-*{font-family:Corbel;color:#333333;font:20px ;font-weight:400;}
+*{font-family:PingFang SC;color:#333333;font:20px ;font-weight:400;}
 QPushButton#pushButton{font-weight:100;}
 QPushButton#pushButton_2{font-weight:700;}
+

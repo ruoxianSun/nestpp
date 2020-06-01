@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1035</width>
-    <height>892</height>
+    <width>787</width>
+    <height>592</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,8 +59,17 @@
       </item>
       <item>
        <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
         <property name="text">
-         <string>Hello This is a test.</string>
+         <string>Hello This is a test.HHHHHJJJJJJJBBBBBIIIIILLLLLLMMMNN</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -97,6 +106,12 @@
       </property>
       <item>
        <widget class="CListWidget" name="listWidget">
+        <property name="minimumSize">
+         <size>
+          <width>745</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
@@ -127,186 +142,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string/>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>项目名</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>属性1</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>属性2</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目1</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string>新建子项目1</string>
-       </property>
-       <property name="text">
-        <string>a</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string>新建子项目2</string>
-       </property>
-       <property name="text">
-        <string>b</string>
-       </property>
-       <property name="text">
-        <string>2</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="text">
-        <string>新建子项目3</string>
-       </property>
-       <property name="text">
-        <string>c</string>
-       </property>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目2</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目3</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目4</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目5</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string>新建项目6</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-    </widget>
+    <widget class="CTreeView" name="treeView"/>
    </item>
   </layout>
  </widget>
@@ -315,6 +151,11 @@
    <class>CListWidget</class>
    <extends>QListWidget</extends>
    <header>clistwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CTreeView</class>
+   <extends>QTreeView</extends>
+   <header>ctreeview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

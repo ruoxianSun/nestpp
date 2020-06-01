@@ -8,7 +8,7 @@
 namespace Ui {
 class Form;
 }
-
+class QStandardItemModel;
 class Form : public QWidget
 {
     Q_OBJECT
@@ -22,6 +22,7 @@ protected slots:
 protected:
     void paintEvent(QPaintEvent*e);
 private:
+    QStandardItemModel*model;
     Ui::Form *ui;
 };
 
