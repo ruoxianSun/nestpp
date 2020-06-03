@@ -60,7 +60,7 @@ Form::Form(QWidget *parent) :
     ui->listWidget->setWrapping(true);
     ui->listWidget->setResizeMode(QListView::Adjust);
     ui->listWidget->setSpacing(0);
-    for(int i=0;i<6;i++)
+    for(int i=0;i<16;i++)
     {
         auto form=new FormItem;
         auto item=new QListWidgetItem;
@@ -68,10 +68,6 @@ Form::Form(QWidget *parent) :
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item,form);
     }
-    setStyleSheet("QListWidget::item{border:0px;background:#666666;margin-right:0px;margin-left:0px;margin-top:10px;padding:0px;}"
-                  "QLabel{padding:0px;margin:0px;border-width:0px;}"
-                  "QPushButton{padding:0px;margin:0px;}"
-                  "QScrollBar:vertical{width:10px;margin:0px;border:0px;padding:0px;}");
 }
 
 Form::~Form()
@@ -100,8 +96,8 @@ void Form::onFont()
 void Form::paintEvent(QPaintEvent *e)
 {
     ///params config
-    int shadowSize=15;
-    int radSize=0;
+    int shadowSize=10;
+    int radSize=3;
     QColor borderColor("#aaaaaa");
     QColor backgroundColor("#ffffff");
     QVector<QVector<double>> gradientCurve={{0,150},{0.2,75},{0.75,10},{1,0}};
@@ -179,7 +175,7 @@ void Form::paintEvent(QPaintEvent *e)
     int adj=shadowSize-radSize;
     QRect inner=rect().adjusted(adj,adj,-adj,-adj);
     painter.setBrush(backgroundColor);
-#if 1 //normal
+#if 0 //normal
     painter.drawRect(inner);
 #else
     painter.drawRoundRect(inner,radSize,radSize);

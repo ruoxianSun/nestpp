@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     addFont();
-    readCSSfile(":/css1.qss");
+    readCSSfile(":/css1.css");
     MainWindow w;
     w.show();
 

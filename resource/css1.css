@@ -1,0 +1,39 @@
+
+*{
+font-family:PingFang SC;color:#333333;font:20px ;font-weight:100;
+background:#f0f0f0;
+border:1px solid #a0a0a0;
+border-radius:3px;
+}
+
+QListWidget{
+border:1px solid #616161;
+border-radius:3px;
+}
+
+QTreeView{
+border:1px solid #616161;
+border-radius:3px;
+}
+
+QPushButton{
+background: #f1f1f1;
+border:1px solid #616161;
+border-radius:3px;
+}
+QPushButton#pushButton_2{
+font-weight:700;
+border:1px solid #616161;
+border-radius:3px;}
+
+QListWidget::item{
+border:0px;
+background:#666666;
+margin-right:0px;
+margin-left:0px;
+margin-top:10px;
+padding:0px;
+}
+QScrollBar:vertical{
+width:10px;
+}
