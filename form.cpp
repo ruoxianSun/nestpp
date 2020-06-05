@@ -46,7 +46,7 @@ Form::Form(QWidget *parent) :
         QStandardItem* item = list.at(i);
         for(int j=0;j<5;j++)
             item->setChild(0,j,new QStandardItem(QString("sub item %1").arg(j)));
-        item->setChild(0,5,new QStandardItem(""));
+        item->setChild(0,5,new QStandardItem(""));//不加这一行不行
     }
 
 
