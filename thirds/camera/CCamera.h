@@ -22,7 +22,8 @@ public:
     void setViewport(glm::vec4 vp){_viewport=vp;_aspect=vp[2]/vp[3];}
     glm::vec4 viewport(){return _viewport;}
     void setViewMode(float viewAngle, float Near, float Far);
-    void setViewMode(float left, float right, float bottom, float top, float near, float far);
+    void setViewMode(float height);
+    void setViewMode(float lt, float rt, float bm, float tp, float nr, float fr);
     void setProject(float left, float right, float bottom, float top, float near, float far);
     void rotateRollCU(double deg);
     void rotateRollCR(double deg);
@@ -38,11 +39,11 @@ public:
     glm::vec3 cameraUp() { return _cameraUp; }
     glm::vec3 cameraDirection() { return _cameraDirection; }
 
-    Ray3d getCameraRay(glm::vec2 p, glm::vec4 viewport);
-    glm::vec2 getScreenPos(glm::vec3 center,glm::mat4 model,glm::vec4 viewport);
-    glm::vec3 getOrthoPos(float sx, float sy);
-    glm::vec2 getOffsetInCameraClipZero(glm::vec2 s, glm::vec2 e, glm::vec4 viewport);
-    glm::mat4 getOrthoMatrix(glm::vec4 viewport);
+    Ray3d cameraRay(glm::vec2 p);
+    glm::vec2 toScreen(glm::vec3 center,glm::mat4 model);
+    glm::vec3 toOrthoModePos(float sx, float sy);
+    glm::vec2 offsetInCameraClipSpace(glm::vec2 s, glm::vec2 e);
+    glm::mat4 getOrthoMatrix();
     void pushStat(glm::mat4 project,shapeType type);
     void popStat();
 private:

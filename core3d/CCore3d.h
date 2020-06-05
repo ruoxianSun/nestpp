@@ -1,5 +1,5 @@
-#ifndef __CCORE_DATA_H__
-#define __CCORE_DATA_H__
+#ifndef __CCORE3D_H__
+#define __CCORE3D_H__
 #include "glm\glm.hpp"
 #include "glm\gtc\constants.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -20,19 +20,19 @@ namespace glm
 }
 QDebug operator <<(QDebug&dbg,point3f p);
 
-class CPlane{
+class CPlane3d{
   public:
-    CPlane(glm::vec3&org,glm::vec3 &dir)
+    CPlane3d(glm::vec3&org,glm::vec3 &dir)
     {
         _org=org;
         _dir=glm::normalize(dir);
     }
-    CPlane(glm::vec3&v0,glm::vec3&v1,glm::vec3&v2)
+    CPlane3d(glm::vec3&v0,glm::vec3&v1,glm::vec3&v2)
     {
         _org=v0;
         _dir=glm::normalize(glm::cross(v0-v1,v0-v2));
     }
-    bool intersect(CPlane&other)
+    bool intersect(CPlane3d&other)
     {
         float val=glm::dot(other._dir,_dir);
         if(val==1||val==-1)//two planes parallel to each other
@@ -43,7 +43,7 @@ class CPlane{
     glm::vec3 _org;
     glm::vec3 _dir;
 };
-class CGeom
+class CGeometry
 {
 public:
     void clear();
@@ -62,12 +62,12 @@ public:
 		_vao = _vbo =_ebo= 0;
         _data=0;
 	}
-	~CRender();
-    virtual void setup(CGeom *data=0);
+    virtual ~CRender();
+    virtual void setup(CGeometry *data=0);
 	virtual void use();
 	virtual void unuse();
     virtual void render(int type = 0x0004);//default GL_TRIANGLES
-	CGeom*_data;
+    CGeometry*_data;
     unsigned int _vao;
     unsigned int _vbo;
     unsigned int _ebo;
@@ -81,39 +81,40 @@ class CLineRender:public CRender
 {
 public:
 	CLineRender() :CRender() {}
+    virtual ~CLineRender(){}
 	virtual void render(int type = 0x0001); // GL_LINES 
 };
 class Shader;
-class CObj
+class CObject3d
 {
 public:
-	CObj()
+    CObject3d()
 	{
         _data = 0;
 		_render = 0;
 		_modelMatrix = glm::mat4(1.0f);
         _isSelected=false;
 	}
-    virtual ~CObj(){}
+    virtual ~CObject3d(){}
     virtual void setColor(glm::vec3 color){_color=color;}
     virtual void render(CCamera*camera);
     virtual void pushMatrix(CCamera*camera);
     virtual void popMatrix();
-    std::shared_ptr<CGeom> _data;
+    std::shared_ptr<CGeometry> _data;
     std::shared_ptr<CRender> _render;
     std::shared_ptr<Shader>_shader;
 	glm::mat4 _modelMatrix;
     bool _isSelected;
     glm::vec3 _color;
 };
-class CLines3d :public CObj
+class CLines3d :public CObject3d
 {
 public:
-	CLines3d() :CObj() {
-        _data = std::make_shared<CGeom>();
+    CLines3d() :CObject3d() {
+        _data = std::make_shared<CGeometry>();
         _render = std::make_shared<CLineRender>();
 	}
-    void render(CCamera*camera) { CObj::render(camera); }
+    void render(CCamera*camera) { CObject3d::render(camera); }
 	~CLines3d()
     {
 
@@ -137,35 +138,4 @@ public:
     bool _needOptional;
     bool _drawPlat;
 };
-class CArrows3d:public CObj
-{
-public:
-	CArrows3d(float radius=5.f,float length=10.f) :CObj()
-		, _radius(radius), _length(length)
-    {
-        _data = std::make_shared<CGeom>();
-        _render = std::make_shared<CLineRender>();
-	}	
-    void setColor(glm::vec3 color);
-    void setShader();
-	void update(float axisLength);
-	void translate(glm::mat4&m);
-    void translate(const glm::mat4&m);
-    void render(CCamera*camera);
-	~CArrows3d()
-    {
-	}
-	float _radius;
-    float _length;
-	CLines3d _line;
-};
-class CAxis3d
-{
-public:
-    void setShader();
-	void setAxisLength(const point3f&org,float length);
-    void render(CCamera*camera);
-    CArrows3d axis3d[3];
-	float _axisLength;
-};
-#endif
+#endif//__CCORE3D_H__

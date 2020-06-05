@@ -8,7 +8,7 @@ using namespace nest;
 
 class Form;
 class CGlWidget;
-class CGeom;
+class CGeometry;
 namespace Ui {
 class MainWindow;
 }
@@ -30,7 +30,7 @@ private:
     std::vector<npPolygon::Ptr> polygons,nfps;
     std::shared_ptr<CGlWidget> gls;
 public:
-    std::vector<std::shared_ptr<CGeom>> geoms;
+    std::vector<std::shared_ptr<CGeometry>> geoms;
 };
 
 #endif // MAINWINDOW_H

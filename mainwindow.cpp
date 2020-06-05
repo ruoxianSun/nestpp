@@ -42,8 +42,8 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         gls->show();
 
         CStlReader reader;
-        CGeom*geom=reader.readModel("helm.stl",[&](int t,int p){});
-        std::shared_ptr<CGeom> geomp=std::make_shared<CGeom>(*geom);
+        CGeometry*geom=reader.readModel("helm.stl",[&](int t,int p){});
+        std::shared_ptr<CGeometry> geomp=std::make_shared<CGeometry>(*geom);
         geoms.push_back(geomp);
         delete geom;
         gls->addModels(geoms);

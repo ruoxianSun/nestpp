@@ -12,7 +12,7 @@ class CGlWidget : public QOpenGLWidget
     Q_OBJECT
 public:
     explicit CGlWidget(QWidget *parent = nullptr);
-    void addModels(std::vector<std::shared_ptr<CGeom>> &geoms);
+    void addModels(std::vector<std::shared_ptr<CGeometry>> &geoms);
     ~CGlWidget();
 signals:
 public slots:
@@ -32,7 +32,7 @@ protected:
     QPoint _lastPos;
     std::shared_ptr<CGrid3d> grid;
     static bool isInited;
-    std::vector<std::shared_ptr<CObj>> models;
+    std::vector<std::shared_ptr<CObject3d>> models;
 };
 
 #endif // CGLWIDGET_H

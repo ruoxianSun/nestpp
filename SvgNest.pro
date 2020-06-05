@@ -26,31 +26,22 @@ CONFIG += c++11
 include(geometry/geometry.pri)
 include(RectangleBinPack/binpack.pri)
 include(thirds/thirds.pri)
+include(core3d/core3d.pri)
 SOURCES += \
-        CCore.cpp \
         CGlWidget.cpp \
         CListWidget.cpp \
-        CModel3d.cpp \
         CPushButton.cpp \
-        CShaderManager.cpp \
-        CStlReader.cpp \
         CTreeView.cpp \
-        Shader.cpp \
         form.cpp \
         formitem.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
-        CCore.h \
         CGlWidget.h \
         CListWidget.h \
-        CModel3d.h \
         CPushButton.h \
-        CShaderManager.h \
-        CStlReader.h \
         CTreeView.h \
-        Shader.h \
         ctest.hpp \
         form.h \
         formitem.h \

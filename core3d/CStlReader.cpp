@@ -9,9 +9,9 @@ CStlReader::CStlReader()
 
 }
 
-CGeom * CStlReader::readModel(const QString &filename,delegateCallback dcb)
+CGeometry * CStlReader::readModel(const QString &filename,delegateCallback dcb)
 {
-    CGeom * model=Q_NULLPTR;
+    CGeometry * model=Q_NULLPTR;
 
     QString suffix=QFileInfo(filename).completeSuffix().toLower();
     if (suffix.compare("stl")==0)
@@ -22,9 +22,9 @@ CGeom * CStlReader::readModel(const QString &filename,delegateCallback dcb)
     return model;
 }
 
-CGeom *CStlReader::readerSTL(QString filename, delegateCallback dcb)
+CGeometry *CStlReader::readerSTL(QString filename, delegateCallback dcb)
 {
-    CGeom * model = readerAscii(filename);
+    CGeometry * model = readerAscii(filename);
     if (model == Q_NULLPTR || model->_vertexs.size()==0)
     {
         model = readerBinary(filename,dcb);
@@ -34,14 +34,14 @@ CGeom *CStlReader::readerSTL(QString filename, delegateCallback dcb)
 
 
 
-CGeom *CStlReader::readerAscii(QString filename)
+CGeometry *CStlReader::readerAscii(QString filename)
 {
     return Q_NULLPTR;
 }
 
-CGeom *CStlReader::readerBinary(QString filename, delegateCallback dcb)
+CGeometry *CStlReader::readerBinary(QString filename, delegateCallback dcb)
 {
-    CGeom *model = new CGeom();
+    CGeometry *model = new CGeometry();
     QFile file(filename);
     file.open(QFile::ReadOnly);
     QString header= readString(file,80);

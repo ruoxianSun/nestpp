@@ -1,5 +1,5 @@
 #include "GL\glew.h"
-#include "CCore.h"
+#include "CCore3d.h"
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm\gtc\type_ptr.hpp"
 #include "glm/gtx/intersect.hpp"
@@ -12,7 +12,7 @@ void CRender::unuse()
 {
 }
 
-void CRender::setup(CGeom *data)
+void CRender::setup(CGeometry *data)
 {
     if (data)
         _data = data;
@@ -62,13 +62,13 @@ bool glm::operator<(const point3f& p1, const point3f& p2)
 	return false;
 }
 
-void CGeom::clear() {
+void CGeometry::clear() {
     _vertexs.clear();
     _indexs.clear();
     caches.clear();
 }
 
-void CGeom::translate(glm::mat4& mat)
+void CGeometry::translate(glm::mat4& mat)
 {
     for (int i = 0; i < _vertexs.size(); i++)
 	{
@@ -77,7 +77,7 @@ void CGeom::translate(glm::mat4& mat)
 	}
 }
 
-int CGeom::insertVertex(const point3f &v)
+int CGeometry::insertVertex(const point3f &v)
 {
     if(caches.find(v)==caches.end())
     {
@@ -89,7 +89,7 @@ int CGeom::insertVertex(const point3f &v)
     return index;
 }
 
-point3f& CGeom::operator[](const int& n)
+point3f& CGeometry::operator[](const int& n)
 {
 	assert(n >= _indexs.size());
 	return _vertexs[_indexs[n]];
@@ -112,7 +112,7 @@ CRender::~CRender()
 
 
 
-void CObj::render(CCamera *camera)
+void CObject3d::render(CCamera *camera)
 {
     if (!_shader)return;
     if (!_render)return;
@@ -125,7 +125,7 @@ void CObj::render(CCamera *camera)
     _shader->EndShader();
 }
 
-void CObj::pushMatrix(CCamera *cc){
+void CObject3d::pushMatrix(CCamera *cc){
     CCamera&camera=*cc;
     glm::mat4  project = camera.matrixProject();
     glm::mat4  view = camera.matrixView();
@@ -139,108 +139,12 @@ void CObj::pushMatrix(CCamera *cc){
 
 
 
-void CObj::popMatrix(){
+void CObject3d::popMatrix(){
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();}
 
-void CArrows3d::render(CCamera*camera)
-{
-    _render->setup(_data.get());
-    _line._render->setup(_line._data.get());
-    CObj::render(camera);
-    glLineWidth(1.50f);
-    _line.render(camera);
-}
-void CArrows3d::setColor(glm::vec3 color)
-{
-    _color=color;
-    _line.setColor(color);
-}
-
-void CArrows3d::setShader()
-{
-    _line._shader=CShaderManager::Instance()->getShader("cube");
-    _shader=CShaderManager::Instance()->getShader("cube");
-}
-
-void CArrows3d::update(float axisLength)
-{
-	_data->clear();
-	float length = _length;
-	int presition = 12;
-	float radius = _radius;
-	point3f top =  (axisLength+length)*point3f(0.0f, 0.0f, 1.0f);
-	point3f mid = axisLength*point3f(0.0f, 0.0f, 1.0f);
-	std::vector<point3f> arrows;
-	for (int i = 0; i < presition; i++)
-	{
-		float sit = glm::two_pi<float>()*i / presition;
-		float x = mid.x+radius*glm::cos(sit);
-		float y = mid.y+radius*glm::sin(sit);
-		arrows.push_back(point3f(x, y, mid.z));
-	}
-	for (int i = 0; i < arrows.size(); i++)
-	{
-		_data->insertVertex(top);
-		_data->insertVertex(arrows[i]);
-		_data->insertVertex(arrows[(i + 1) % arrows.size()]);
-		_data->insertVertex(mid);
-		_data->insertVertex(arrows[(i + 1) % arrows.size()]);
-		_data->insertVertex(arrows[i]);
-	}
-	_line._data->clear();
-	_line._data->insertVertex(point3f(0.f));
-	_line._data->insertVertex(mid);
-}
-void CArrows3d::translate(glm::mat4&m)
-{
-	_data->translate(m);
-	_line._data->translate(m);
-}
-
-void CArrows3d::translate(const glm::mat4 &m)
-{
-    glm::mat4 mm=m;
-    translate (mm);
-}
-void CAxis3d::setShader()
-{
-    for (int i = 0; i < 3; i++)
-    {
-        glm::vec3 rgb(0.f);
-        rgb[i]=1;
-        axis3d[i].setColor(rgb);
-        axis3d[i].setShader();
-    }
-}
-
-void CAxis3d::setAxisLength(const point3f&org,float length)
-{
-	_axisLength = length;
-	float axisLen = _axisLength;
-	glm::mat4 rx = glm::rotate(glm::mat4(1.0f), glm::radians(90.f), glm::vec3(0, 1.0, 0));
-	glm::mat4 ry = glm::rotate(glm::mat4(1.0f),glm::radians(-90.0f), glm::vec3(1.0f, 0, 0));
-
-	glm::mat4 t = glm::translate(glm::mat4(1.0f), org);
-	for (int i = 0; i < 3; i++)
-    {
-		axis3d[i].update(axisLen);
-	}
-	axis3d[0].translate(t*rx);
-	axis3d[1].translate(t*ry);
-	axis3d[2].translate(t);
-
-}
-void CAxis3d::render(CCamera*camera)
-{
-	
-	for (int i = 0; i < 3; i++)
-    {
-        axis3d[i].render(camera);
-	}
-}
 void CGrid3d::setColor(Shader*shader, glm::vec3 color)
 {
 	shader->use();

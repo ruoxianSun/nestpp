@@ -10,7 +10,7 @@ CGlWidget::CGlWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
 }
 
-void CGlWidget::addModels(std::vector<std::shared_ptr<CGeom> > &geoms)
+void CGlWidget::addModels(std::vector<std::shared_ptr<CGeometry> > &geoms)
 {
     makeCurrent();
     models.clear();
@@ -46,7 +46,7 @@ void CGlWidget::initializeGL(){
     camera=std::make_shared<CCamera>();
     camera->setLookAt({0,0,500},{0,0,0},{0,1,0});
     camera->setViewport({0,0,width(),height()});
-    camera->setViewMode(60,0.1f,2000.f);
+    camera->setViewMode(height());
     grid=std::make_shared<CGrid3d>();
     grid->set(100,100,100);
 }
@@ -55,7 +55,7 @@ void CGlWidget::resizeGL(int w, int h)
 {
     glViewport(0,0,w,h);
     camera->setViewport({0,0,w,h});
-    camera->setViewMode(60,0.1f,2000.f);
+    camera->setViewMode(h);
     qDebug()<<"context:"<<context()->isValid();
 }
 

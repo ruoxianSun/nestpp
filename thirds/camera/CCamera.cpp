@@ -5,8 +5,6 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/intersect.hpp>
 using namespace std;
-#define OUTINFO_2_PARAM(fmt,var1,var2) {CHAR sOut[256];CHAR sfmt[50];sprintf_s(sfmt,"%s%s","INFO--",fmt);sprintf_s(sOut,(sfmt),var1,var2);OutputDebugStringA(sOut);}
-
 namespace sgl
 {
     /* ¹¹Ôìº¯Êý */
@@ -20,6 +18,7 @@ namespace sgl
         _cameraDirection = glm::vec3(0.0,1.0, 0.0);
         _minLen = 60;
         _maxLen = 800;
+        _farDist=2000.f;_nearDist=0.1f;
     }
 
     CCamera::~CCamera()
@@ -52,17 +51,21 @@ namespace sgl
         _type.push_back(shapeType::Perspective);
     }
 
-
-
-
-
-    glm::vec2 CCamera::getScreenPos(glm::vec3 center, glm::mat4 model, glm::vec4 viewport)
+    void CCamera::setViewMode(float height)
     {
-        glm::vec3 pos=glm::project(center,_view*model,_project.back(),viewport);
-        return glm::vec2(pos.x,viewport[3]-pos.y);
+        float hh=height*0.5f;
+        setViewMode(-hh*_aspect,hh*_aspect,-hh,hh,_nearDist,_farDist);
     }
 
-    glm::vec3 CCamera::getOrthoPos(float sx, float sy)
+    void CCamera::setViewMode(float lt, float rt, float bm, float tp, float nr, float fr)
+    {
+        _type.push_back(shapeType::Ortho);
+        setProject(lt, rt, bm, tp, nr, fr);
+    }
+
+
+
+    glm::vec3 CCamera::toOrthoModePos(float sx, float sy)
     {
         auto func =
                 [](const glm::vec3 &p, const glm::mat4 &viewMatrix, const glm::mat4&projectMatrix, const glm::vec4&rect)->glm::vec3
@@ -74,21 +77,20 @@ namespace sgl
         };
         float x = sx;
         float y = sy;
-        glm::mat4 ortho = getOrthoMatrix(viewport());
+        glm::mat4 ortho = getOrthoMatrix();
         glm::vec3 org0 = func(glm::vec3(viewport()[2] / 2.0, viewport()[3] / 2.0, 0.0f),_view,ortho,viewport());
         glm::vec3 targ0 = func(glm::vec3(x, y, 0.0f),_view,ortho,viewport());
         glm::vec3 targ = func(glm::vec3(x, y, 1.0f),_view,ortho,viewport());
         return  (targ0 - org0) + eye();
     }
 
-
-    glm::vec2 CCamera::getOffsetInCameraClipZero(glm::vec2 s, glm::vec2 e, glm::vec4 viewport)
+    glm::vec2 CCamera::offsetInCameraClipSpace(glm::vec2 s, glm::vec2 e)
     {
         glm::vec3 dir = -cameraDirection();
         glm::vec3 org(0.0f);
 
-        Ray3d rs = getCameraRay(s, viewport);
-        Ray3d re = getCameraRay(e, viewport);
+        Ray3d rs = cameraRay(s);
+        Ray3d re = cameraRay(e);
 
         glm::vec3 cs = intersectPlane({org, dir},rs);
         glm::vec3 ce = intersectPlane({org, dir},re);
@@ -100,18 +102,23 @@ namespace sgl
         return glm::vec2(lr, ud);
     }
 
-    glm::mat4 CCamera::getOrthoMatrix(glm::vec4 viewport)
+    glm::mat4 CCamera::getOrthoMatrix()
     {
-        float w = viewport[2];
-        float h = viewport[3];
+        float w = viewport()[2];
+        float h = viewport()[3];
         float aspect = w / h;
         float height = h*0.5f;
         float b = -height;
         float t = height;
         float l = b*aspect;
         float r = t*aspect;
-        return glm::ortho(l, r, b, t, _nearDist - 500, _farDist);
+        return glm::ortho(l, r, b, t, _nearDist, _farDist);
     }
+
+
+
+
+
 
     void CCamera::pushStat(glm::mat4 project, CCamera::shapeType type){
         _project.push_back(project);
@@ -283,7 +290,7 @@ namespace sgl
         if (_type.back() == Perspective)
         {
             float t=(d>=0?-1:1);
-            Ray3d ray=getCameraRay(pos,viewport());
+            Ray3d ray=cameraRay(pos);
             glm::vec3 dir=ray[1];
             glm::vec3 look=glm::vec3(model*glm::vec4(glm::vec3(0.f),1.f));
             float nearDistance=glm::dot(dir,look-_eye);
@@ -302,7 +309,7 @@ namespace sgl
             len=len*(d>=0?1:-1);
             if(_viewHeight-len<0)return;
             glm::vec2 center=glm::vec2(viewport()[2]*0.5f,viewport()[3]*0.5f);
-            glm::vec2 mov= getOffsetInCameraClipZero(center ,pos,viewport());
+            glm::vec2 mov= offsetInCameraClipSpace(center ,pos);
             moveAlongCR(mov.x);
             moveAlongCU(mov.y);
             float height = (_viewHeight-len)*0.5f;
@@ -312,7 +319,7 @@ namespace sgl
             float r = t*_aspect;
             setViewMode(l, r, b, t, _nearDist - 500, _farDist);
 
-            mov= getOffsetInCameraClipZero(center ,pos,viewport());
+            mov= offsetInCameraClipSpace(center ,pos);
             moveAlongCR(-mov.x);
             moveAlongCU(-mov.y);
         }
@@ -320,7 +327,7 @@ namespace sgl
 
 
 
-    Ray3d CCamera::getCameraRay(glm::vec2 p, glm::vec4 viewport)
+    Ray3d CCamera::cameraRay(glm::vec2 p)
     {
         auto func =
                 [](const glm::vec3& p, const glm::mat4& viewMatrix, const glm::mat4& projectMatrix, const glm::vec4& rect)-> glm::vec3
@@ -330,17 +337,23 @@ namespace sgl
             glm::vec4 world = inversem * clip;
             return glm::vec3(world /= world.w);
         };
-        glm::vec3 worldPosFar = func(glm::vec3(p, 1.0f), this->_view, this->_project.back(), viewport);
+        glm::vec3 worldPosFar = func(glm::vec3(p, 1.0f), this->_view, this->_project.back(), viewport());
         if (_type.back() == Perspective)
         {
             return {eye(), glm::normalize(worldPosFar-eye())};
         }
         else
         {
-            glm::vec3 worldPosCenter = func(glm::vec3(viewport[2] / 2.0, viewport[3] / 2.0, 1.0f), this->_view, this->_project.back(), viewport);
-            glm::vec3 worldPosNear = func(glm::vec3(p, -1.0f), this->_view, this->_project.back(), viewport);
+            glm::vec3 worldPosCenter = func(glm::vec3(viewport()[2] / 2.0, viewport()[3] / 2.0, 1.0f), this->_view, this->_project.back(), viewport());
+            glm::vec3 worldPosNear = func(glm::vec3(p, -1.0f), this->_view, this->_project.back(), viewport());
             return {(worldPosFar - worldPosCenter)+eye(), glm::normalize(worldPosFar - worldPosNear)};
         }
+    }
+
+    glm::vec2 CCamera::toScreen(glm::vec3 center, glm::mat4 model)
+    {
+        glm::vec3 pos=glm::project(center,_view*model,_project.back(),viewport());
+        return glm::vec2(pos.x,viewport()[3]-pos.y);
     }
 
     void CCamera::moveAlongCR(float fUnits)
@@ -354,11 +367,7 @@ namespace sgl
         _eye += _cameraUp* fUnits;
         setViewMatrix();
     }
-    void CCamera::setViewMode(float lt, float rt, float bm, float tp, float nr, float fr)
-    {
-        _type.push_back(shapeType::Ortho);
-        setProject(lt, rt, bm, tp, nr, fr);
-    }
+
 
     void CCamera::setProject(float lt, float rt, float bm, float tp, float nr, float fr)
     {
