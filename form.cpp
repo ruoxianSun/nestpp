@@ -33,26 +33,21 @@ Form::Form(QWidget *parent) :
                                      <<QStringLiteral("tag5"));
     QStandardItem * item = new QStandardItem(tr("item one"));
 
-    model->setItem(0,1,item);
     model->setItem(0,0,new QStandardItem(""));
+    model->setItem(1,0,new QStandardItem(""));
+    model->setItem(2,0,new QStandardItem(""));
+    model->setItem(0,1,item);
     model->setItem(1,1,new QStandardItem(tr("item two")));
     model->setItem(2,1,new QStandardItem(tr("item three")));
-    model->item(0,0)->setChild(0,0,new QStandardItem(tr("")));
-    model->item(0,0)->setChild(0,1,new QStandardItem(tr("item four")));
-    QList<QStandardItem*> list = model->findItems(tr("item two"));
-
-
+    QList<QStandardItem*> list;
+    list<<model->item(0,0)<<model->item(1,0)<<model->item(2,0);
     for(int i = 0;i<list.length();i++)
     {
         QStandardItem* item = list.at(i);
-        model->setItem(item->row(),2,new QStandardItem(tr("item two msg")));
+        for(int j=0;j<5;j++)
+            item->setChild(0,j,new QStandardItem(QString("sub item %1").arg(j)));
+        item->setChild(0,5,new QStandardItem(""));
     }
-
-
-
-
-
-
 
 
     ui->listWidget->setViewMode(QListWidget::IconMode);

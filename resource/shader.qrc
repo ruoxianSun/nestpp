@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>box.frag</file>
+        <file>box.vertex</file>
+        <file>cube.frag</file>
+        <file>cube.vertex</file>
+    </qresource>
+</RCC>

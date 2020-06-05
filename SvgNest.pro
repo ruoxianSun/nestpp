@@ -25,17 +25,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 include(geometry/geometry.pri)
 include(RectangleBinPack/binpack.pri)
+include(thirds/thirds.pri)
 SOURCES += \
+        CCore.cpp \
+        CGlWidget.cpp \
         CListWidget.cpp \
+        CModel3d.cpp \
+        CPushButton.cpp \
+        CShaderManager.cpp \
+        CStlReader.cpp \
         CTreeView.cpp \
+        Shader.cpp \
         form.cpp \
         formitem.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        CCore.h \
+        CGlWidget.h \
         CListWidget.h \
+        CModel3d.h \
+        CPushButton.h \
+        CShaderManager.h \
+        CStlReader.h \
         CTreeView.h \
+        Shader.h \
         ctest.hpp \
         form.h \
         formitem.h \
@@ -52,5 +67,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    resource/image.qrc \
+    resource/shader.qrc \
     resource/style.qrc
 

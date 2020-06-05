@@ -3,12 +3,17 @@
 #include "QPainter"
 #include "QKeyEvent"
 #include "form.h"
+#include "CModel3d.h"
+#include "CStlReader.h"
+#include "CShaderManager.h"
+#include "CGlWidget.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     form=new Form(this);
+    setCentralWidget(new CGlWidget(this));
 }
 
 MainWindow::~MainWindow()
@@ -28,6 +33,21 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     case Qt::Key_D:
     {
         form->show();
+    }break;
+    case Qt::Key_G:
+    {
+
+        gls=std::make_shared<CGlWidget>();
+        gls->setWindowFlag(Qt::Dialog);
+        gls->show();
+
+        CStlReader reader;
+        CGeom*geom=reader.readModel("helm.stl",[&](int t,int p){});
+        std::shared_ptr<CGeom> geomp=std::make_shared<CGeom>(*geom);
+        geoms.push_back(geomp);
+        delete geom;
+        gls->addModels(geoms);
+        static_cast<CGlWidget*>(centralWidget())->addModels(geoms);
     }break;
     case Qt::Key_A:{
         QPolygonF p1=QSettings("pp0.pl",QSettings::IniFormat).value("pl").value<QPolygonF>();
