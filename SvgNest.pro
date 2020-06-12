@@ -30,6 +30,7 @@ include(core3d/core3d.pri)
 SOURCES += \
         CGlWidget.cpp \
         CListWidget.cpp \
+        CMyMessageBox.cpp \
         CMyStyle.cpp \
         CPushButton.cpp \
         CTreeView.cpp \
@@ -41,6 +42,7 @@ SOURCES += \
 HEADERS += \
         CGlWidget.h \
         CListWidget.h \
+        CMyMessageBox.h \
         CMyStyle.h \
         CPushButton.h \
         CTreeView.h \
@@ -50,6 +52,7 @@ HEADERS += \
         mainwindow.h
 
 FORMS += \
+        CMyMessageBox.ui \
         form.ui \
         formitem.ui \
         mainwindow.ui

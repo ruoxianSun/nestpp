@@ -19,6 +19,7 @@ public:
 protected slots:
     void onItemClicked(QTreeWidgetItem *item, int column);
     void onFont();
+    void onShowMessageBox();
 protected:
     void paintEvent(QPaintEvent*e);
 private:

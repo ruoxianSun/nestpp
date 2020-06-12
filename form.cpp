@@ -10,6 +10,8 @@
 #include <QStandardItemModel>
 #include "CMyStyle.h"
 #include <QStyledItemDelegate>
+#include "CMyMessageBox.h"
+
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
@@ -19,7 +21,7 @@ Form::Form(QWidget *parent) :
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 //    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
-
+    connect(ui->pushButton_2,SIGNAL(clicked(bool)),this,SLOT(onShowMessageBox()));
     ui->comboBox->setStyle(new CMyStyle);
     ui->comboBox->setItemDelegate(new QStyledItemDelegate);
     ui->comboBox->addItems(QStringList()<<"hello"<<"world");
@@ -91,6 +93,11 @@ void Form::onFont()
     qDebug()<<"label height:"<<ui->label->height()<<", font height:"<<met.height();
     qDebug()<<"ascent:"<<met.ascent()<<" ,descent:"<<met.descent()<<" ,overline pos:"<<met.overlinePos()
            <<",cap height:"<<met.capHeight()<<",height:"<<met.boundingRect("HH").height()<<",tight height:"<<met.tightBoundingRect("HH").height();
+}
+
+void Form::onShowMessageBox()
+{
+    CMyMessageBox::warning(this,"MyMessage Box Test","this is a message box test ,tai jian dan le ya..........!!!!!!!!!!!!! ");
 }
 
 void Form::paintEvent(QPaintEvent *e)
