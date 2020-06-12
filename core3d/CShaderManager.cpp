@@ -77,8 +77,8 @@ CShaderManager::CShaderManager(QObject *parent) : QObject(parent)
 Shader::Ptr CShaderManager::loadShader(const QString &name)
 {
     QString base(":");
-    QString vertexShaderSource=base+"/"+name+".vertex";
-    QString fragShaderSource=base+"/"+name+".frag";
+    QString vertexShaderSource=base+"/"+name+".vs";
+    QString fragShaderSource=base+"/"+name+".fs";
     Shader::Ptr shader=Shader::New();
     shader->SetShader(vertexShaderSource.toLatin1().data(),fragShaderSource.toLatin1().data());
     _shaders[name]=shader;

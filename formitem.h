@@ -2,11 +2,9 @@
 #define FORMITEM_H
 
 #include <QWidget>
-
 namespace Ui {
 class FormItem;
 }
-
 class FormItem : public QWidget
 {
     Q_OBJECT

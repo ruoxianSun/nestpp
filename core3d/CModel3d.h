@@ -5,11 +5,8 @@
 class CModel3d:public CObject3d
 {
 public:
-    CModel3d():CObject3d ()
-    {
-        _data=std::make_shared<CGeometry>();
-        _render=std::make_shared<CRender>();
-    }
+    CModel3d();
+    void setGeom(std::shared_ptr<CGeometry>geom);
     void render(CCamera*camera);
 };
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1078</width>
-    <height>650</height>
+    <height>715</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,13 +23,6 @@
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuNew">
-    <property name="title">
-     <string>Window</string>
-    </property>
-    <addaction name="actionAddGL"/>
-   </widget>
-   <addaction name="menuNew"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

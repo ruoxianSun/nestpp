@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>image/fileinfo-128.png</file>
+        <file>image/top-border.png</file>
     </qresource>
 </RCC>

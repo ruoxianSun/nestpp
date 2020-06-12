@@ -7,13 +7,15 @@
 #include "CStlReader.h"
 #include "CShaderManager.h"
 #include "CGlWidget.h"
+#include "CMyStyle.h"
+#include "formitem.h"
+#include <QStyledItemDelegate>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    form=new Form(this);
-    setCentralWidget(new CGlWidget(this));
+    form=new Form;
 }
 
 MainWindow::~MainWindow()
@@ -32,6 +34,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     }break;
     case Qt::Key_D:
     {
+        form->setWindowFlag(Qt::Dialog);
         form->show();
     }break;
     case Qt::Key_G:
@@ -42,12 +45,13 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         gls->show();
 
         CStlReader reader;
-        CGeometry*geom=reader.readModel("helm.stl",[&](int t,int p){});
+        CGeometry*geom=reader.readModel("helm.stl",[&](int t,int p){
+            qDebug()<<"loading ["<<p<<"/"<<t<<"]";
+        });
         std::shared_ptr<CGeometry> geomp=std::make_shared<CGeometry>(*geom);
         geoms.push_back(geomp);
         delete geom;
         gls->addModels(geoms);
-        static_cast<CGlWidget*>(centralWidget())->addModels(geoms);
     }break;
     case Qt::Key_A:{
         QPolygonF p1=QSettings("pp0.pl",QSettings::IniFormat).value("pl").value<QPolygonF>();
@@ -88,7 +92,38 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
 void MainWindow::paintEvent(QPaintEvent *e)
 {
+return QMainWindow::paintEvent(e);
+    QFont f;
+    f.setFamily("PingFang SC");
+    f.setPointSize(17);
+    auto toImg=[](QFont font,QString msg,QColor color=Qt::black)
+    {
+        QFontMetrics fm(font);
+        QImage img(fm.horizontalAdvance(msg),fm.height(), QImage::Format_ARGB32_Premultiplied);
+
+        if(img.isNull())return QImage();
+        img.fill(Qt::white);
+        QPen pen;
+        pen.setColor(color);
+        QTextOption option(Qt::AlignRight | Qt::AlignTop);
+        option.setWrapMode(QTextOption::WordWrap);
+        QRectF rect(0, 0, img.width(), img.height());
+        QPainter painter;
+        painter.begin(&img);
+        //painter.setRenderHint(QPainter::Antialiasing);
+        painter.setCompositionMode(QPainter::CompositionMode_Source);
+        painter.fillRect(0, 0, img.width(), img.height(), Qt::red);
+        painter.setFont(font);
+        painter.setPen(pen);
+        painter.drawText(rect, msg, option);
+        painter.setCompositionMode(QPainter::CompositionMode_Destination);
+        painter.end();
+        return img;
+    };
+    int angle=360;
+    QImage img=toImg(f,QString("%1 %2 : %3¡å").arg(tr("rotate")).arg("Y").arg(angle));
     QPainter painter(this);
+    painter.drawImage(100,100,img);
     painter.setPen(Qt::red);
     npRectangle::value_type offx=150;
     npRectangle::value_type offy=150;

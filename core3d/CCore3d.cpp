@@ -18,6 +18,14 @@ void CRender::setup(CGeometry *data)
         _data = data;
     if (!_data)return;
 
+    std::vector<point3f> vertices(_data->indexSize());
+    std::vector<int> indexs(vertices.size());
+    for(int i=0;i<vertices.size();i++)
+    {
+        vertices[i]=_data->_vertexs[_data->_indexs[i]];
+        indexs[i]=i;
+    }
+
     if (!isValid(_vao))
         glGenVertexArrays(1,(GLuint*)&(_vao));
     glBindVertexArray(_vao);
@@ -25,12 +33,14 @@ void CRender::setup(CGeometry *data)
     if (!isValid(_vbo))
         glGenBuffers(1, (GLuint*)&_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*_data->_vertexs.size(), &_data->_vertexs[0], GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
 
     if (!isValid(_ebo))
         glGenBuffers(1,(GLuint*) &_ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int)*_data->_indexs.size(), &_data->_indexs[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int)*indexs.size(), &indexs[0], GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 
     glBindVertexArray(0);
 }

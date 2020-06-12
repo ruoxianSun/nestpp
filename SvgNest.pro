@@ -30,6 +30,7 @@ include(core3d/core3d.pri)
 SOURCES += \
         CGlWidget.cpp \
         CListWidget.cpp \
+        CMyStyle.cpp \
         CPushButton.cpp \
         CTreeView.cpp \
         form.cpp \
@@ -40,6 +41,7 @@ SOURCES += \
 HEADERS += \
         CGlWidget.h \
         CListWidget.h \
+        CMyStyle.h \
         CPushButton.h \
         CTreeView.h \
         ctest.hpp \

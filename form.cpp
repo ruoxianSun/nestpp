@@ -8,6 +8,8 @@
 #include <QFontDialog>
 #include <QFontMetrics>
 #include <QStandardItemModel>
+#include "CMyStyle.h"
+#include <QStyledItemDelegate>
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
@@ -15,9 +17,12 @@ Form::Form(QWidget *parent) :
     ui->setupUi(this);
 
     this->setAttribute(Qt::WA_TranslucentBackground, true);
-    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+//    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
 
+    ui->comboBox->setStyle(new CMyStyle);
+    ui->comboBox->setItemDelegate(new QStyledItemDelegate);
+    ui->comboBox->addItems(QStringList()<<"hello"<<"world");
 
 
     model = new QStandardItemModel(ui->treeView);
@@ -55,7 +60,7 @@ Form::Form(QWidget *parent) :
     ui->listWidget->setWrapping(true);
     ui->listWidget->setResizeMode(QListView::Adjust);
     ui->listWidget->setSpacing(0);
-    for(int i=0;i<16;i++)
+    for(int i=0;i<2;i++)
     {
         auto form=new FormItem;
         auto item=new QListWidgetItem;

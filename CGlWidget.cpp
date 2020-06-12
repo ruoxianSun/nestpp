@@ -8,6 +8,9 @@ bool CGlWidget::isInited=false;
 
 CGlWidget::CGlWidget(QWidget *parent) : QOpenGLWidget(parent)
 {
+    auto fmt=format();
+    fmt.setSamples(8);
+    setFormat(fmt);
 }
 
 void CGlWidget::addModels(std::vector<std::shared_ptr<CGeometry> > &geoms)
@@ -17,9 +20,7 @@ void CGlWidget::addModels(std::vector<std::shared_ptr<CGeometry> > &geoms)
     for(auto geom:geoms)
     {
         std::shared_ptr<CModel3d> render=std::make_shared<CModel3d>();
-        render->_data=geom;
-        render->_shader=CShaderManager::getShader(QStringList()<<":/cube.vertex"<<":/cube.frag");
-        render->_render->setup(render->_data.get());
+        render->setGeom(geom);
         render->_color=glm::vec3(0,0,1);
         models.push_back(render);
     }
@@ -35,16 +36,17 @@ void CGlWidget::cleanup()
     qDebug()<<"clean up";
     makeCurrent();
     grid.reset();
+    models.clear();
     doneCurrent();
 }
 
 
 void CGlWidget::initializeGL(){
     qDebug()<<"initializeGL";
-//    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &CGlWidget::cleanup);
+    connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &CGlWidget::cleanup);
     glewInit();
     camera=std::make_shared<CCamera>();
-    camera->setLookAt({0,0,500},{0,0,0},{0,1,0});
+    camera->setLookAt({0,-200,500},{0,0,0},{0,1,0});
     camera->setViewport({0,0,width(),height()});
     camera->setViewMode(height());
     grid=std::make_shared<CGrid3d>();
@@ -63,8 +65,10 @@ void CGlWidget::paintGL()
 {
     makeCurrent();
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glClearColor(0,0,0,1);
-    grid->render(camera.get(),glm::mat4(1.f),glm::vec3(1,0,0));
+    glClearColor(0.5,0.5,0.6,1);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_DEPTH_TEST);
+    grid->render(camera.get(),glm::mat4(1.f),glm::vec3(0.7,0.6,0.5));
     for(auto render:models)
     {
         render->render(camera.get());
@@ -122,8 +126,8 @@ void CGlWidget::mouseMoveEvent(QMouseEvent *e)
     if(e->buttons()&Qt::RightButton)
     {
         QPoint move=e->pos()-_lastPos;
-        camera->rotateRollCU(move.x());
-        camera->rotateRollCR(move.y());
+        camera->rotateRollCU(-move.x());
+        camera->rotateRollCR(-move.y());
         _lastPos=e->pos();
     }
     update();

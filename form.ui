@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>787</width>
-    <height>905</height>
+    <width>1044</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>50</number>
+    <number>5</number>
    </property>
    <property name="leftMargin">
     <number>20</number>
@@ -87,11 +87,20 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QComboBox" name="comboBox"/>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>200</height>
+      </size>
+     </property>
      <property name="title">
       <string>QListWidget layout test</string>
      </property>
@@ -153,7 +162,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>500</height>
+       <height>250</height>
       </size>
      </property>
     </widget>

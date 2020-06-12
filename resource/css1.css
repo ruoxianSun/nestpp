@@ -1,9 +1,6 @@
 
 *{
 font-family:PingFang SC;color:#333333;font:20px ;font-weight:100;
-background:#f0f0f0;
-border:1px solid #a0a0a0;
-border-radius:3px;
 }
 
 QListWidget{
@@ -28,12 +25,20 @@ border-radius:3px;}
 
 QListWidget::item{
 border:0px;
-background:#666666;
 margin-right:0px;
 margin-left:0px;
-margin-top:10px;
 padding:0px;
 }
 QScrollBar:vertical{
 width:10px;
+}
+QComboBox{
+    background:#f0f0f0;
+    border:1px solid #333333;
+    border-radius:10px;
+}
+QComboBox QAbstractItemView{
+background:#f0f0f0;
+border:1px solid #333333;
+border-radius:10px;
 }
