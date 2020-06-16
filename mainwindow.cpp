@@ -46,7 +46,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
         CStlReader reader;
         CGeometry*geom=reader.readModel("helm.stl",[&](int t,int p){
-            qDebug()<<"loading ["<<p<<"/"<<t<<"]";
+//            qDebug()<<"loading ["<<p<<"/"<<t<<"]";
         });
         std::shared_ptr<CGeometry> geomp=std::make_shared<CGeometry>(*geom);
         geoms.push_back(geomp);

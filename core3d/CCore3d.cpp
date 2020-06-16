@@ -36,6 +36,10 @@ void CRender::setup(CGeometry *data)
     glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER,0);
 
+    glBindBuffer(GL_ARRAY_BUFFER,_vbo);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (point3f), (GLvoid*)0);
+
     if (!isValid(_ebo))
         glGenBuffers(1,(GLuint*) &_ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
@@ -107,15 +111,15 @@ point3f& CGeometry::operator[](const int& n)
 
 CRender::~CRender()
 {
-    if(isValid(_vao))
-        glDeleteVertexArrays(1, (GLuint*)&_vao);
-	_vao = 0;
     if(isValid(_vbo))
         glDeleteBuffers(1, (GLuint*)&_vbo);
 	_vbo = 0;
     if(isValid(_ebo))
         glDeleteBuffers(1,(GLuint*)&_ebo);
     _ebo=0;
+    if(isValid(_vao))
+        glDeleteVertexArrays(1, (GLuint*)&_vao);
+    _vao = 0;
 
 }
 

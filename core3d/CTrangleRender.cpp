@@ -3,10 +3,17 @@
 
 
 
+CTrangleRender::~CTrangleRender()
+{
+    if(isValid(_nbo))
+        glDeleteBuffers(1, (GLuint*)&_nbo);
+    _nbo=0;
+}
+
 void CTrangleRender::setup(CGeometry *geom)
 {
     auto calNormal=[](const glm::vec3&a,const glm::vec3&b,const glm::vec3&c){
-        return glm::normalize(glm::cross(a-c,a-b));
+        return glm::normalize(glm::cross(a-b,a-c));
     };
     if (geom)
         _data = geom;
@@ -34,6 +41,9 @@ void CTrangleRender::setup(CGeometry *geom)
     glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*normals.size(), &normals[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER,0);
 
+    glBindBuffer(GL_ARRAY_BUFFER,_nbo);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(point3f), (GLvoid*)0);
 
     glBindVertexArray(0);
 }
@@ -42,13 +52,6 @@ void CTrangleRender::render(int tag)
 {
     if(_data==0)return;
     glBindVertexArray(_vao);
-    glBindBuffer(GL_ARRAY_BUFFER,_vbo);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof (point3f), (GLvoid*)0);
-
-    glBindBuffer(GL_ARRAY_BUFFER,_nbo);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(point3f), (GLvoid*)0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_ebo);
     glDrawElements(tag, _data->indexSize(), GL_UNSIGNED_INT, 0);

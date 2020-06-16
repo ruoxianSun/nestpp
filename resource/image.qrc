@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>image/fileinfo-128.png</file>
         <file>image/top-border.png</file>
+        <file>image/sfileinfo-128.png</file>
+        <file>ButtonBase.qml</file>
+        <file>ButtonMessage.qml</file>
+        <file>ButtonHello.qml</file>
     </qresource>
 </RCC>

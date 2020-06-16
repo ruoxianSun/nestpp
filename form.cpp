@@ -11,17 +11,26 @@
 #include "CMyStyle.h"
 #include <QStyledItemDelegate>
 #include "CMyMessageBox.h"
-
+#include <QQuickItem>
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
 {
     ui->setupUi(this);
-
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 //    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
     connect(ui->pushButton_2,SIGNAL(clicked(bool)),this,SLOT(onShowMessageBox()));
+
+    ui->quickWidget->setSource(QUrl("qrc:/ButtonMessage.qml"));
+    auto obj=ui->quickWidget->rootObject();
+    if(obj)
+    {
+        qDebug()<<obj->objectName();
+        connect(obj,SIGNAL(clicked(bool)),this,SLOT(onShowMessageBox()));
+
+    }
+    ui->quickWidget_2->setSource(QUrl("qrc:/ButtonHello.qml"));
     ui->comboBox->setStyle(new CMyStyle);
     ui->comboBox->setItemDelegate(new QStyledItemDelegate);
     ui->comboBox->addItems(QStringList()<<"hello"<<"world");

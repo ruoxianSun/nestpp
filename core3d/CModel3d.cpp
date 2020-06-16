@@ -47,10 +47,10 @@ void CModel3d::render(CCamera *camera)
     _shader->setUniform("Material.Kd",glm::vec3(0.29));
     _shader->setUniform("Material.Ks",glm::vec3(0.3));
     _shader->setUniform("Material.Shininess",20.f);
-    _shader->setUniform("Light.La",glm::vec3(1.f));
+    _shader->setUniform("Light.La",glm::vec3(0.5));
     _shader->setUniform("Light.Ld",glm::vec3(0.5));
-    _shader->setUniform("Light.Ls",glm::vec3(1));
-    _shader->setUniform("Light.Position",glm::vec4(100.f,-5000.f,100.f,1.0f));
+    _shader->setUniform("Light.Ls",glm::vec3(0.6));
+    _shader->setUniform("Light.Position",glm::vec3(1.f,-5000.f,1.f));
 #else
 
     _shader->setUniform("specColor",glm::vec3(1,0,0));

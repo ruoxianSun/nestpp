@@ -13,15 +13,13 @@ border:1px solid #616161;
 border-radius:3px;
 }
 
-QPushButton{
+#pushButton_2{
 background: #f1f1f1;
 border:1px solid #616161;
 border-radius:3px;
+qproperty-icon: url(:/image/fileinfo-128.png) off,url(:/image/sfileinfo-128.png) on;
+qproperty-iconSize:20px 20px;
 }
-QPushButton#pushButton_2{
-font-weight:700;
-border:1px solid #616161;
-border-radius:3px;}
 
 QListWidget::item{
 border:0px;

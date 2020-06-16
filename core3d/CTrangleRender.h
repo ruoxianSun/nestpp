@@ -9,6 +9,7 @@ public:
     {
         _nbo=0;
     }
+    ~CTrangleRender();
     void setup(CGeometry*geom=0);
     void render(int tag=0x0004);
     int _nbo;
