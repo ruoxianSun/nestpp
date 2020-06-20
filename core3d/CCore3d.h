@@ -16,9 +16,20 @@ class CCamera;
 using namespace sgl;
 namespace glm
 {
-	static bool operator <(const point3f& p1, const point3f& p2);
+static inline bool operator <(const point3f& p1, const point3f& p2)
+{
+    if (p1.x < p2.x)return true;
+    else if (p1.x == p2.x)
+        if (p1.y < p2.y)return true;
+        else if (p1.y == p2.y)
+            if (p1.z < p2.z)return true;
+    return false;
 }
-QDebug operator <<(QDebug&dbg,point3f p);
+}
+inline QDebug operator <<(QDebug &dbg, point3f p){
+    dbg.nospace()<<"<"<<p.x<<","<<p.y<<","<<p.z<<">";
+    return dbg;
+}
 
 class CPlane3d{
   public:

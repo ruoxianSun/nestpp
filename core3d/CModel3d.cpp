@@ -3,14 +3,14 @@
 #include "camera/CCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
-#include "CTrangleRender.h"
+#include "CRenderMesh.h"
 #include "CShaderManager.h"
 CModel3d::CModel3d():CObject3d ()
 {
     _data=std::make_shared<CGeometry>();
 #define TEST_TRIANGLE
 #ifdef TEST_TRIANGLE
-    _render=std::make_shared<CTrangleRender>();
+    _render=std::make_shared<CRenderMesh>();
 #else
     _render=std::make_shared<CLineRender>();
 #endif
@@ -39,18 +39,16 @@ void CModel3d::render(CCamera *camera)
     _shader->use();
 
 #ifdef TEST_TRIANGLE
-    _shader->setUniform("ProjectionMatrix",camera->matrixProject());
-    _shader->setUniform("ModelViewMatrix",mv);
-    _shader->setUniform("NormalMatrix",glm::mat3(glm::inverseTranspose(mv)));
-    _shader->setUniform("MVP",mvp);
-    _shader->setUniform("Material.Ka",glm::vec3(0.6,0.7,0.8));
-    _shader->setUniform("Material.Kd",glm::vec3(0.29));
-    _shader->setUniform("Material.Ks",glm::vec3(0.3));
-    _shader->setUniform("Material.Shininess",20.f);
-    _shader->setUniform("Light.La",glm::vec3(0.5));
-    _shader->setUniform("Light.Ld",glm::vec3(0.5));
-    _shader->setUniform("Light.Ls",glm::vec3(0.6));
-    _shader->setUniform("Light.Position",glm::vec3(1.f,-5000.f,1.f));
+    _shader->setUniform("projection",camera->matrixProject());
+    _shader->setUniform("model",_modelMatrix);
+    _shader->setUniform("view",camera->matrixView());
+    _shader->setUniform("material.ambient",glm::vec3(0.6,0.7,0.8));
+    _shader->setUniform("material.diffuse",glm::vec3(0.3));
+    _shader->setUniform("material.specular",glm::vec3(0.2));
+    _shader->setUniform("material.shininess",50.f);
+    _shader->setUniform("light.color",glm::vec3(1.f));
+    _shader->setUniform("light.direction",-camera->cameraDirection());
+    _shader->setUniform("viewPos",camera->eye());
 #else
 
     _shader->setUniform("specColor",glm::vec3(1,0,0));

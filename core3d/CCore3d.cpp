@@ -33,7 +33,7 @@ void CRender::setup(CGeometry *data)
     if (!isValid(_vbo))
         glGenBuffers(1, (GLuint*)&_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*vertices.size(), &vertices[0], GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(point3f)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER,0);
 
     glBindBuffer(GL_ARRAY_BUFFER,_vbo);
@@ -66,15 +66,7 @@ void CLineRender::render(int type)
     CRender::render(GL_LINES);
 }
 
-bool glm::operator<(const point3f& p1, const point3f& p2)
-{
-    if (p1.x < p2.x)return true;
-    else if (p1.x == p2.x)
-        if (p1.y < p2.y)return true;
-		else if (p1.y == p2.y)
-			if (p1.z < p2.z)return true;
-	return false;
-}
+
 
 void CGeometry::clear() {
     _vertexs.clear();
@@ -358,10 +350,6 @@ void CGrid3d::setModelMatrix(glm::mat4 mat)
     other._modelMatrix = mat;
     optionals._modelMatrix = mat;
     _plats._modelMatrix=mat;
-}
-QDebug operator <<(QDebug &dbg, point3f p){
-    dbg.nospace()<<"<"<<p.x<<","<<p.y<<","<<p.z<<">";
-    return dbg;
 }
 
 

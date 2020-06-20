@@ -1,16 +1,16 @@
 #include <GL/glew.h>
-#include "CTrangleRender.h"
+#include "CRenderMesh.h"
 
 
 
-CTrangleRender::~CTrangleRender()
+CRenderMesh::~CRenderMesh()
 {
     if(isValid(_nbo))
         glDeleteBuffers(1, (GLuint*)&_nbo);
     _nbo=0;
 }
 
-void CTrangleRender::setup(CGeometry *geom)
+void CRenderMesh::setup(CGeometry *geom)
 {
     auto calNormal=[](const glm::vec3&a,const glm::vec3&b,const glm::vec3&c){
         return glm::normalize(glm::cross(a-b,a-c));
@@ -34,7 +34,7 @@ void CTrangleRender::setup(CGeometry *geom)
         normals[i*3+1]=normal;
         normals[i*3+2]=normal;
     }
-
+    glBindVertexArray(_vao);
     if(!isValid(_nbo))
         glGenBuffers(1,(GLuint*)&_nbo);
     glBindBuffer(GL_ARRAY_BUFFER,_nbo);
@@ -48,7 +48,7 @@ void CTrangleRender::setup(CGeometry *geom)
     glBindVertexArray(0);
 }
 
-void CTrangleRender::render(int tag)
+void CRenderMesh::render(int tag)
 {
     if(_data==0)return;
     glBindVertexArray(_vao);

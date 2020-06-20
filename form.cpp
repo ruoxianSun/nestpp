@@ -31,7 +31,6 @@ Form::Form(QWidget *parent) :
 
     }
     ui->quickWidget_2->setSource(QUrl("qrc:/ButtonHello.qml"));
-    ui->comboBox->setStyle(new CMyStyle);
     ui->comboBox->setItemDelegate(new QStyledItemDelegate);
     ui->comboBox->addItems(QStringList()<<"hello"<<"world");
 

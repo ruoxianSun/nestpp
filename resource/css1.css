@@ -13,14 +13,21 @@ border:1px solid #616161;
 border-radius:3px;
 }
 
-#pushButton_2{
-background: #f1f1f1;
+CPushButton{
+background: #e1e1e1;
 border:1px solid #616161;
 border-radius:3px;
-qproperty-icon: url(:/image/fileinfo-128.png) off,url(:/image/sfileinfo-128.png) on;
-qproperty-iconSize:20px 20px;
+qproperty-icon:url(:/image/fileinfo-128.png);
+qproperty-aicon:url(:/image/sfileinfo-128.png);
+qproperty-iconPosition:20;
+qproperty-iconTextSpace:20;
 }
-
+CPushButton::hover{
+background: #d1d1d1;
+border:2px solid #616161;
+border-radius:3px;
+font:white;
+}
 QListWidget::item{
 border:0px;
 margin-right:0px;

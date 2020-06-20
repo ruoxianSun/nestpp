@@ -11,7 +11,6 @@ FormItem::FormItem(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->comboBox->setItemDelegate(new QStyledItemDelegate(this));
-    ui->comboBox->setStyle(new CMyStyle);
     ui->comboBox->addItems(QStringList()<<"hello"<<"world");
 }
 
