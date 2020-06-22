@@ -21,6 +21,8 @@ qproperty-icon:url(:/image/fileinfo-128.png);
 qproperty-aicon:url(:/image/sfileinfo-128.png);
 qproperty-iconPosition:20;
 qproperty-iconTextSpace:20;
+qproperty-textColor:#303030;
+qproperty-textColorA:#a0a0a0;
 }
 CPushButton::hover{
 background: #d1d1d1;

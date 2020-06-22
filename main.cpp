@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     readCSSfile(":/css1.css");
-    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
+//    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
 //    auto styel=new CMyStyle;
 //    QApplication::setStyle(styel);
-    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
+//    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
     return a.exec();
 }

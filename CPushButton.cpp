@@ -20,9 +20,11 @@ void CPushButton::paintEvent(QPaintEvent *e)
     button.text.clear();
     painter.drawControl(QStyle::CE_PushButton,button);
     button.icon=icon();
+    button.palette.setBrush(QPalette::ButtonText,getTextColor());
     if(button.state&QStyle::State_MouseOver)
     {
         button.icon=getAicon();
+        button.palette.setBrush(QPalette::ButtonText,getTextColorA());
     }
     QRect iconRect({getIconPosition(),
                    button.rect.height()/2-iconSize().height()/2},iconSize());
