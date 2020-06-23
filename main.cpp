@@ -4,8 +4,9 @@
 #include <QFontDatabase>
 #include <QDebug>
 #include <QDir>
+#include <memory>
 #include "CMyStyle.h"
-
+#include "css.h"
 void readCSSfile(QString filename)
 {
     QFile file(filename);
@@ -31,6 +32,12 @@ void addFont()
 
     }
 }
+void testCss(){
+
+    StyleSheet ss;
+    int num=ss.parse(qApp->styleSheet().toStdString());
+    qDebug()<<"num:"<<num;
+}
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -39,6 +46,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     readCSSfile(":/css1.css");
+//    testCss();
 //    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
 //    auto styel=new CMyStyle;
 //    QApplication::setStyle(styel);

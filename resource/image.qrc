@@ -6,5 +6,6 @@
         <file>ButtonBase.qml</file>
         <file>ButtonMessage.qml</file>
         <file>ButtonHello.qml</file>
+        <file>image/pfileinfo-128.png</file>
     </qresource>
 </RCC>

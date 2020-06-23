@@ -47,6 +47,7 @@ HEADERS += \
         CMyStyle.h \
         CPushButton.h \
         CTreeView.h \
+        css.h \
         ctest.hpp \
         form.h \
         formitem.h \

@@ -5,7 +5,8 @@
 CPushButton::CPushButton(QWidget *parent) :
     QPushButton(parent)
 {
-    aicon=QIcon();
+    iconA=QIcon();
+    iconP=QIcon();
     iconPosition=0;
     iconTextSpace=0;
 }
@@ -23,8 +24,13 @@ void CPushButton::paintEvent(QPaintEvent *e)
     button.palette.setBrush(QPalette::ButtonText,getTextColor());
     if(button.state&QStyle::State_MouseOver)
     {
-        button.icon=getAicon();
+        button.icon=getIconA();
         button.palette.setBrush(QPalette::ButtonText,getTextColorA());
+    }
+    if(button.state&QStyle::State_On||button.state&QStyle::State_Sunken)
+    {
+        button.icon=getIconP();
+        button.palette.setBrush(QPalette::ButtonText,getTextColorP());
     }
     QRect iconRect({getIconPosition(),
                    button.rect.height()/2-iconSize().height()/2},iconSize());
@@ -33,27 +39,3 @@ void CPushButton::paintEvent(QPaintEvent *e)
     painter.drawItemText(textRect, Qt::AlignVCenter|Qt::AlignLeft, button.palette, (button.state & QStyle::State_Enabled),
                          text(), QPalette::ButtonText);
 }
-
-QIcon CPushButton::getAicon() const {
-    return aicon;
-}
-
-
-
-void CPushButton::setAicon(const QIcon &icon)
-{
-    aicon=icon;
-    update();
-    updateGeometry();
-}
-
-int CPushButton::getIconPosition()
-{
-    return iconPosition;
-}
-
-void CPushButton::setIconPosition(const int &point)
-{
-    iconPosition=point;
-}
-

@@ -18,11 +18,13 @@ background: #e1e1e1;
 border:1px solid #616161;
 border-radius:3px;
 qproperty-icon:url(:/image/fileinfo-128.png);
-qproperty-aicon:url(:/image/sfileinfo-128.png);
+qproperty-iconA:url(:/image/sfileinfo-128.png);
+qproperty-iconP:url(:/image/pfileinfo-128.png);
 qproperty-iconPosition:20;
 qproperty-iconTextSpace:20;
 qproperty-textColor:#303030;
 qproperty-textColorA:#a0a0a0;
+qproperty-textColorP:#a0a000;
 }
 CPushButton::hover{
 background: #d1d1d1;
