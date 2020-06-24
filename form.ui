@@ -93,6 +93,9 @@
       <property name="text">
        <string>MyMessageBox</string>
       </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QComboBox" name="comboBox">
       <property name="geometry">

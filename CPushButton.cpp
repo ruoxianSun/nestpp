@@ -5,8 +5,8 @@
 CPushButton::CPushButton(QWidget *parent) :
     QPushButton(parent)
 {
-    iconA=QIcon();
-    iconP=QIcon();
+    iconHover=QIcon();
+    iconPressed=QIcon();
     iconPosition=0;
     iconTextSpace=0;
 }
@@ -24,13 +24,18 @@ void CPushButton::paintEvent(QPaintEvent *e)
     button.palette.setBrush(QPalette::ButtonText,getTextColor());
     if(button.state&QStyle::State_MouseOver)
     {
-        button.icon=getIconA();
-        button.palette.setBrush(QPalette::ButtonText,getTextColorA());
+        button.icon=geticonHover();
+        button.palette.setBrush(QPalette::ButtonText,getTextColorHover());
     }
-    if(button.state&QStyle::State_On||button.state&QStyle::State_Sunken)
+    if(button.state&QStyle::State_Sunken)
     {
         button.icon=getIconP();
-        button.palette.setBrush(QPalette::ButtonText,getTextColorP());
+        button.palette.setBrush(QPalette::ButtonText,getTextColorPressed());
+    }
+    if(button.state&QStyle::State_On)
+    {
+        button.icon=geticonChecked();
+        button.palette.setBrush(QPalette::ButtonText,getTextColorChecked());
     }
     QRect iconRect({getIconPosition(),
                    button.rect.height()/2-iconSize().height()/2},iconSize());
