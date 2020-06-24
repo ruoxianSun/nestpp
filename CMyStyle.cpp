@@ -20,7 +20,7 @@ QRect CMyStyle::subControlRect(QStyle::ComplexControl cc, const QStyleOptionComp
         switch (sc) {
         case QStyle::SC_ComboBoxListBoxPopup:
         {
-            return opt->rect.adjusted(0,2,0,2);
+            return opt->rect.adjusted(0,4,0,4);
         }break;
         default:
             break;
@@ -50,5 +50,5 @@ QRect CMyStyle::subElementRect(QStyle::SubElement element, const QStyleOption *o
 void CMyStyle::drawItemText(QPainter *painter, const QRect &rect, int flags,
                             const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
 {
-    QProxyStyle::drawItemText(painter,rect,flags,pal,enabled,text,textRole);
+    QProxyStyle::drawItemText(painter,rect.adjusted(20,0,0,0),flags,pal,enabled,text,textRole);
 }

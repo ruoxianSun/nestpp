@@ -47,11 +47,42 @@ width:10px;
 }
 QComboBox{
     background:#f0f0f0;
-    border:1px solid #333333;
-    border-radius:10px;
+    border:1px solid #818181;
+    border-radius:5px;
+    color:#333333;
+    font:16px;
 }
 QComboBox QAbstractItemView{
-background:#f0f0f0;
-border:1px solid #333333;
-border-radius:10px;
+    background:transparent;
+    border:1px solid #818181;
+    border-radius:5px;
+    outline:0px;
+    color:#515151;
+    font:16px;
+
 }
+QComboBox QAbstractItemView::item {
+    height:40px;
+}
+QComboBox QAbstractItemView::item:selected,QComboBox QAbstractItemView::item:hover{
+    background:#f6e5db;
+    color:#333333;
+    font:18px;
+    border:none;
+    padding-left:20px;
+    border-radius:5px;
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width:25px;
+    border-left-width: 0px;
+    border-left-color: gray;
+    border-left-style: solid;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+QComboBox::down-arrow {
+    image: url(:/image/downArrowGray.png);
+}
+
