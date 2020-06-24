@@ -8,5 +8,6 @@
         <file>ButtonHello.qml</file>
         <file>image/pfileinfo-128.png</file>
         <file>image/cfileinfo-128.png</file>
+        <file>image/dfileinfo-128.png</file>
     </qresource>
 </RCC>

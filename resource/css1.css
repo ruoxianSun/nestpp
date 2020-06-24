@@ -21,6 +21,7 @@ qproperty-icon:url(:/image/fileinfo-128.png);
 qproperty-iconHover:url(:/image/sfileinfo-128.png);
 qproperty-iconPressed:url(:/image/pfileinfo-128.png);
 qproperty-iconChecked:url(:/image/cfileinfo-128.png);
+qproperty-iconDisabled:url(:/image/dfileinfo-128.png);
 qproperty-iconPosition:20;
 qproperty-iconTextSpace:20;
 qproperty-textColor:#303030;

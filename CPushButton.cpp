@@ -41,6 +41,7 @@ void CPushButton::paintEvent(QPaintEvent *e)
     if(!(button.state&QStyle::State_Enabled))
     {
         qDebug()<<"enabled cpushbutton";
+        button.icon=geticonDisabled();
         button.palette.setBrush(QPalette::ButtonText,getTextColorDisabled());
     }
     QRect iconRect({getIconPosition(),

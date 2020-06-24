@@ -11,6 +11,7 @@ class CPushButton : public QPushButton
     Q_PROPERTY(QIcon iconHover READ geticonHover WRITE seticonHover)
     Q_PROPERTY(QIcon iconPressed READ getIconP WRITE setIconP)
     Q_PROPERTY(QIcon iconChecked READ geticonChecked WRITE seticonChecked)
+    Q_PROPERTY(QIcon iconDisabled READ geticonDisabled WRITE seticonDisabled)
     Q_PROPERTY(int iconPosition READ getIconPosition WRITE setIconPosition)
     Q_PROPERTY(int iconTextSpace READ getIconTextSpace WRITE setIconTextSpace)
     Q_PROPERTY(QColor textColor READ getTextColor WRITE setTextColor)
@@ -27,6 +28,8 @@ public:
     void setIconP(const QIcon&icon){iconPressed=icon;}
     QIcon geticonChecked()const {return iconChecked;}
     void seticonChecked(const QIcon&icon){iconChecked=icon;}
+    QIcon geticonDisabled()const {return iconDisabled;}
+    void seticonDisabled(const QIcon&icon){iconDisabled=icon;}
     int getIconPosition(){return iconPosition;}
     void setIconPosition(const int&point){iconPosition=point;}
     void setIconTextSpace(int space){iconTextSpace=space;}
@@ -45,7 +48,7 @@ signals:
 
 public slots:
 protected:
-    QIcon iconHover,iconPressed,iconChecked;
+    QIcon iconHover,iconPressed,iconChecked,iconDisabled;
     int iconPosition;
     int iconTextSpace;
     QColor textColor,textColorHover,textColorPressed,textColorChecked,textColorDisabled;
