@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     addFont();
+    readCSSfile(":/css1.css");
     MainWindow w;
     w.show();
-    readCSSfile(":/css1.css");
 //    testCss();
 //    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
 //    auto styel=new CMyStyle;

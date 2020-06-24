@@ -29,6 +29,7 @@ include(RectangleBinPack/binpack.pri)
 include(thirds/thirds.pri)
 include(core3d/core3d.pri)
 SOURCES += \
+        CCombobox.cpp \
         CGlWidget.cpp \
         CListWidget.cpp \
         CMyMessageBox.cpp \
@@ -41,6 +42,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        CCombobox.h \
         CGlWidget.h \
         CListWidget.h \
         CMyMessageBox.h \

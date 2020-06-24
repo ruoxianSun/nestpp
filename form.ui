@@ -97,13 +97,13 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="CCombobox" name="comboBox">
       <property name="geometry">
        <rect>
         <x>11</x>
         <y>138</y>
-        <width>87</width>
-        <height>21</height>
+        <width>251</width>
+        <height>31</height>
        </rect>
       </property>
      </widget>
@@ -218,6 +218,16 @@
    <header location="global">QtQuickWidgets/QQuickWidget</header>
   </customwidget>
   <customwidget>
+   <class>CPushButton</class>
+   <extends>QPushButton</extends>
+   <header>cpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CCombobox</class>
+   <extends>QComboBox</extends>
+   <header>ccombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>CListWidget</class>
    <extends>QListWidget</extends>
    <header>clistwidget.h</header>
@@ -226,11 +236,6 @@
    <class>CTreeView</class>
    <extends>QTreeView</extends>
    <header>ctreeview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>CPushButton</class>
-   <extends>QPushButton</extends>
-   <header>cpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
