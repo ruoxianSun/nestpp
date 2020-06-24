@@ -2,6 +2,7 @@
 #include <QStyleOptionButton>
 #include <QStylePainter>
 #include <QPainter>
+#include <QDebug>
 CPushButton::CPushButton(QWidget *parent) :
     QPushButton(parent)
 {
@@ -36,6 +37,11 @@ void CPushButton::paintEvent(QPaintEvent *e)
     {
         button.icon=geticonChecked();
         button.palette.setBrush(QPalette::ButtonText,getTextColorChecked());
+    }
+    if(!(button.state&QStyle::State_Enabled))
+    {
+        qDebug()<<"enabled cpushbutton";
+        button.palette.setBrush(QPalette::ButtonText,getTextColorDisabled());
     }
     QRect iconRect({getIconPosition(),
                    button.rect.height()/2-iconSize().height()/2},iconSize());

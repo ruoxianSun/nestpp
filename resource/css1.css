@@ -27,6 +27,7 @@ qproperty-textColor:#303030;
 qproperty-textColorHover:red;
 qproperty-textColorPressed:blue;
 qproperty-textColorChecked:green;
+qproperty-textColorDisabled:gray;
 }
 CPushButton::hover{
 background: #d1d1d1;

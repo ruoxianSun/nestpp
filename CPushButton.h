@@ -10,13 +10,14 @@ class CPushButton : public QPushButton
     Q_OBJECT
     Q_PROPERTY(QIcon iconHover READ geticonHover WRITE seticonHover)
     Q_PROPERTY(QIcon iconPressed READ getIconP WRITE setIconP)
-     Q_PROPERTY(QIcon iconChecked READ geticonChecked WRITE seticonChecked)
+    Q_PROPERTY(QIcon iconChecked READ geticonChecked WRITE seticonChecked)
     Q_PROPERTY(int iconPosition READ getIconPosition WRITE setIconPosition)
     Q_PROPERTY(int iconTextSpace READ getIconTextSpace WRITE setIconTextSpace)
     Q_PROPERTY(QColor textColor READ getTextColor WRITE setTextColor)
     Q_PROPERTY(QColor textColorHover READ getTextColorHover WRITE setTextColorHover)
     Q_PROPERTY(QColor textColorPressed READ getTextColorPressed WRITE setTextColorPressed)
-     Q_PROPERTY(QColor textColorChecked READ getTextColorChecked WRITE setTextColorChecked)
+    Q_PROPERTY(QColor textColorChecked READ getTextColorChecked WRITE setTextColorChecked)
+    Q_PROPERTY(QColor textColorDisabled READ getTextColorDisabled WRITE setTextColorDisabled)
 public:
     explicit CPushButton(QWidget *parent = nullptr);
     void paintEvent(QPaintEvent*e);
@@ -38,6 +39,8 @@ public:
     QColor getTextColorPressed()const{return textColorPressed;}
     void setTextColorChecked(const QColor&color){textColorChecked=color;}
     QColor getTextColorChecked()const{return textColorChecked;}
+    void setTextColorDisabled(const QColor&color){textColorDisabled=color;}
+    QColor getTextColorDisabled()const{return textColorDisabled;}
 signals:
 
 public slots:
@@ -45,7 +48,7 @@ protected:
     QIcon iconHover,iconPressed,iconChecked;
     int iconPosition;
     int iconTextSpace;
-    QColor textColor,textColorHover,textColorPressed,textColorChecked;
+    QColor textColor,textColorHover,textColorPressed,textColorChecked,textColorDisabled;
 
 };
 
