@@ -69,7 +69,6 @@ QComboBox QAbstractItemView::item:selected,QComboBox QAbstractItemView::item:hov
     color:#333333;
     font:18px;
     border:none;
-    padding-left:20px;
     border-radius:5px;
 }
 QComboBox::drop-down {

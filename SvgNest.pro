@@ -29,6 +29,7 @@ include(RectangleBinPack/binpack.pri)
 include(thirds/thirds.pri)
 include(core3d/core3d.pri)
 SOURCES += \
+        CCheckComboBox.cpp \
         CCombobox.cpp \
         CGlWidget.cpp \
         CListWidget.cpp \
@@ -42,6 +43,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        CCheckComboBox.h \
         CCombobox.h \
         CGlWidget.h \
         CListWidget.h \

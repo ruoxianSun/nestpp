@@ -10,5 +10,7 @@
         <file>image/cfileinfo-128.png</file>
         <file>image/dfileinfo-128.png</file>
         <file>image/downArrowGray.png</file>
+        <file>image/icon_check_normal.png</file>
+        <file>image/icon_check_select.png</file>
     </qresource>
 </RCC>

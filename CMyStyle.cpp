@@ -33,14 +33,32 @@ QRect CMyStyle::subControlRect(QStyle::ComplexControl cc, const QStyleOptionComp
 
 QRect CMyStyle::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
+//    qDebug()<<element<<widget;
     switch (element) {
     case QStyle::SE_ItemViewItemText:{
-        qDebug()<<qstyleoption_cast<const QStyleOptionViewItem*>(option)->text;
-        return option->rect.adjusted(20,1,1,1);
+//        qDebug()<<qstyleoption_cast<const QStyleOptionViewItem*>(option)->text;
+//        return option->rect.adjusted(20,1,1,1);
+    }break;
+    case QStyle::SE_ItemViewItemDecoration:{
+//        qDebug()<<qstyleoption_cast<const QStyleOptionViewItem*>(option)->text;
+    }break;
+    case QStyle::SE_ItemViewItemCheckIndicator:{
     }break;
     }
     return QProxyStyle::subElementRect(element,option,widget);
 }
+
+void CMyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+    QProxyStyle::drawPrimitive(element,option,painter,widget);
+}
+
+void CMyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+    QProxyStyle::drawControl(element,option,painter,widget);
+}
+
+
 
 
 

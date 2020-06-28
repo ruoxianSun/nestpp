@@ -14,7 +14,8 @@ public:
     ~CMyStyle(){}
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc, const QWidget *widget) const override;
     QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget) const override;
-
+    void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+    void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
     void drawItemText(QPainter *painter, const QRect &rect, int flags, const QPalette &pal, bool enabled,
                       const QString &text, QPalette::ColorRole textRole = QPalette::NoRole) const override;
 
