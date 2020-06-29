@@ -47,7 +47,7 @@ void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     opt.text.clear();
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-
+//return;
     const QStyleOptionViewItem *vopt=&option;
 
     const QAbstractItemView *view = qobject_cast<const QAbstractItemView *>(widget);
@@ -82,11 +82,15 @@ void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         }
 
 //        d->viewItemDrawText(p, vopt, textRect);
+
+        const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
+
+        textRect = textRect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
         auto icon=index.data(Qt::DecorationRole);
         auto ricon=qvariant_cast<QIcon>(icon);
         if(icon.isValid())
         {
-            textRect=textRect.adjusted(20,0,0,0);
+            textRect=textRect.adjusted(vopt->decorationSize.width()+4,0,0,0);
         }
         style->drawItemText(painter,textRect,
                             Qt::AlignLeft|Qt::AlignVCenter,vopt->palette,widget->isEnabled(),tex);

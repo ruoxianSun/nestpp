@@ -14,6 +14,7 @@ static QWindow*qt_getWindow(const QWidget*w)
 
 QRect CMyStyle::subControlRect(QStyle::ComplexControl cc, const QStyleOptionComplex *opt, QStyle::SubControl sc, const QWidget *widget) const
 {
+//    qDebug()<<cc<<sc<<widget;
     switch (cc) {
     case QStyle::CC_ComboBox:
     {
@@ -48,13 +49,33 @@ QRect CMyStyle::subElementRect(QStyle::SubElement element, const QStyleOption *o
     return QProxyStyle::subElementRect(element,option,widget);
 }
 
+QRect CMyStyle::itemTextRect(const QFontMetrics &fm, const QRect &r, int flags, bool enabled, const QString &text) const
+{
+//    qDebug()<<r<<text;
+    return QProxyStyle::itemTextRect(fm,r,flags,enabled,text);
+}
+
+QRect CMyStyle::itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const
+{
+//    qDebug()<<r;
+    return QProxyStyle::itemPixmapRect(r,flags,pixmap);
+}
+
+void CMyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex *option, QPainter *painter, const QWidget *widget) const
+{
+//    qDebug()<<control<<widget;
+    QProxyStyle::drawComplexControl(control,option,painter,widget);
+}
+
 void CMyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
+//    qDebug()<<element<<widget;
     QProxyStyle::drawPrimitive(element,option,painter,widget);
 }
 
 void CMyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
+//    qDebug()<<element<<widget;
     QProxyStyle::drawControl(element,option,painter,widget);
 }
 
@@ -68,5 +89,5 @@ void CMyStyle::drawControl(QStyle::ControlElement element, const QStyleOption *o
 void CMyStyle::drawItemText(QPainter *painter, const QRect &rect, int flags,
                             const QPalette &pal, bool enabled, const QString &text, QPalette::ColorRole textRole) const
 {
-    QProxyStyle::drawItemText(painter,rect.adjusted(20,0,0,0),flags,pal,enabled,text,textRole);
+    QProxyStyle::drawItemText(painter,rect.adjusted(12,0,0,0),flags,pal,enabled,text,textRole);
 }
