@@ -32,13 +32,13 @@ void FormShortCut::onUpdate()
         tr("Scale parts"),
     };
     QMap<QString,QString> keyMaps={
-        {tr("Delete parts"),                    tr("Delete")},
-        {tr("Undo"),                            tr("Ctrl+Z")},
-        {tr("Redo"),                            tr("Ctrl+Shift+Z")},
-        {tr("Multiple parts"),                  tr("Ctrl+Mouse Left")},
-        {tr("Box selection support points"),    tr("Ctrl+Mouse Left")},
-        {tr("Rotate parts"),                    tr("Rotation angle+Enter")},
-        {tr("Scale parts"),                     tr("Zoom ratio+Enter")},
+        {keys[0] , tr("Delete")},
+        {keys[1] , tr("Ctrl+Z")},
+        {keys[2] , tr("Ctrl+Shift+Z")},
+        {keys[3] , tr("Ctrl+Mouse Left")},
+        {keys[4] , tr("Ctrl+Mouse Left")},
+        {keys[5] , tr("Rotation angle+Enter")},
+        {keys[6] , tr("Zoom ratio+Enter")},
     };
     auto addItem=[&](QWidget*parent,QString k,QString v){
         auto item=new FormShortCutItem(parent);
