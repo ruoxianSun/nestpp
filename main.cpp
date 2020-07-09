@@ -7,6 +7,7 @@
 #include <memory>
 #include "CMyStyle.h"
 #include "FormShortCut.h"
+#include <qtstylesheethelper.h>
 void readCSSfile(QString filename)
 {
     QFile file(filename);
@@ -37,8 +38,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     addFont();
-    readCSSfile(":/css2.css");
-#define TEST
+    readCSSfile(":/css1.css");
+    QtCss::QtStyleSheetHelper::helper()->setStyleSheet(a.styleSheet());
+//#define TEST
 #ifdef TEST
         FormShortCut sc;
         sc.show();

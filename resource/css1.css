@@ -1,8 +1,17 @@
 
 *{
-font-family:"思源黑体 CN";color:#333333;font:20px ;font-weight:100;
+font-family:"Source Han Sans CN";color:#333333;font:20px ;font-weight:medium;
 }
 
+QLabel#label_2{
+font-weight:bold;
+}
+QLabel#label_3{
+font-weight:medium;
+}
+QLabel#label_4{
+font-weight:normal;
+}
 QListWidget{
 border:1px solid #616161;
 border-radius:3px;
@@ -45,14 +54,14 @@ padding:0px;
 QScrollBar:vertical{
 width:10px;
 }
-QComboBox{
+CCombobox{
     background:#f0f0f0;
     border:1px solid #818181;
     border-radius:5px;
     color:#333333;
     font:16px;
 }
-QComboBox QAbstractItemView{
+CCombobox QAbstractItemView{
     background:transparent;
     border:1px solid #818181;
     border-radius:5px;
@@ -61,17 +70,18 @@ QComboBox QAbstractItemView{
     font:16px;
 
 }
-QComboBox QAbstractItemView::item {
+CCombobox QAbstractItemView::item {
     height:40px;
+    background:#00ffff;
 }
-QComboBox QAbstractItemView::item:selected,QComboBox QAbstractItemView::item:hover{
+CCombobox QAbstractItemView::item:selected,CCombobox QAbstractItemView::item:hover{
     background:#f6e5db;
-    color:#333333;
+    color:red;
     font:18px;
     border:none;
     border-radius:5px;
 }
-QComboBox::drop-down {
+CCombobox::drop-down {
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width:25px;
@@ -81,7 +91,7 @@ QComboBox::drop-down {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
-QComboBox::down-arrow {
+CCombobox::down-arrow {
     image: url(:/image/downArrowGray.png);
 }
 

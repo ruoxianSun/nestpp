@@ -6,6 +6,9 @@
 #include <QApplication>
 #include <QStyleOption>
 #include <QDebug>
+#include <qtstylesheethelper.h>
+#include <qtstylesheet.h>
+using namespace QtCss;
 CCombobox::CCombobox(QWidget *parent) : QComboBox(parent)
 {
     setItemDelegate(new CComboBoxDelegate(view()));
@@ -40,6 +43,12 @@ void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     initStyleOption(&opt, index);
 
     const QWidget *widget = opt.widget;
+
+    QtStyleSheetHelper *helper=QtStyleSheetHelper::helper();
+    auto rule=helper->renderRule(opt.widget,&option, PseudoElement_ViewItem);
+    rule.configurePalette(&opt.palette,opt.state & QStyle::State_Item ? QPalette::HighlightedText : QPalette::Text,
+                          opt.state & QStyle::State_Selected ? QPalette::Highlight : QPalette::Base);
+
     QStyle *style = widget ? widget->style() : QApplication::style();
 
     QRect checkRect = style->proxy()->subElementRect(QStyle::SE_ItemViewItemCheckIndicator, &option, widget);
@@ -50,41 +59,11 @@ void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     opt.text.clear();
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, widget);
 
-//return;
-    const QStyleOptionViewItem *vopt=&option;
 
-    const QAbstractItemView *view = qobject_cast<const QAbstractItemView *>(widget);
-    bool newStyle = true;
-
-    QPalette palette = vopt->palette;
-    palette.setColor(QPalette::All, QPalette::HighlightedText, palette.color(QPalette::Active, QPalette::Text));
-    // Note that setting a saturated color here results in ugly XOR colors in the focus rect
-    palette.setColor(QPalette::All, QPalette::Highlight, palette.base().color().darker(108));
-    QStyleOptionViewItem adjustedOption = *vopt;
-    adjustedOption.palette = palette;
-    // We hide the  focusrect in singleselection as it is not required
-    if ((view->selectionMode() == QAbstractItemView::SingleSelection)
-        && !(vopt->state & QStyle::State_KeyboardFocusChange))
-    adjustedOption.state &= ~QStyle::State_HasFocus;
 
     // draw the text
     if (!tex.isEmpty()) {
-        QPalette::ColorGroup cg = vopt->state & QStyle::State_Enabled
-                              ? QPalette::Normal : QPalette::Disabled;
-        if (cg == QPalette::Normal && !(vopt->state & QStyle::State_Active))
-            cg = QPalette::Inactive;
 
-        if (vopt->state & QStyle::State_Selected) {
-            painter->setPen(vopt->palette.color(cg, QPalette::HighlightedText));
-        } else {
-            painter->setPen(vopt->palette.color(cg, QPalette::Text));
-        }
-        if (vopt->state & QStyle::State_Editing) {
-            painter->setPen(vopt->palette.color(cg, QPalette::Text));
-            painter->drawRect(textRect.adjusted(0, 0, -1, -1));
-        }
-
-//        d->viewItemDrawText(p, vopt, textRect);
 
         const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
 
@@ -93,10 +72,10 @@ void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         auto ricon=qvariant_cast<QIcon>(icon);
         if(icon.isValid())
         {
-            textRect=textRect.adjusted(vopt->decorationSize.width()+4,0,0,0);
+            textRect=textRect.adjusted(opt.decorationSize.width()+4,0,0,0);
         }
         style->drawItemText(painter,textRect,
-                            Qt::AlignLeft|Qt::AlignVCenter,vopt->palette,widget->isEnabled(),tex);
+                            Qt::AlignLeft|Qt::AlignVCenter,opt.palette,widget->isEnabled(),tex,QPalette::Text);
     }
 
 
