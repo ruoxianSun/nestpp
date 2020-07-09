@@ -33,7 +33,6 @@ Form::Form(QWidget *parent) :
     ui->quickWidget_2->setSource(QUrl("qrc:/ButtonHello.qml"));
     ui->comboBox->addItems(QStringList()<<"hello"<<"world");
     ui->comboBox_2->addItems(QStringList()<<"hello"<<"world");
-
     model = new QStandardItemModel(ui->treeView);
     ui->treeView->setModel(model);
     ui->treeView->setTreePosition(1);
@@ -93,13 +92,20 @@ void Form::onFont()
 {
     bool isok=false;
     QFont f=QFontDialog::getFont(&isok,this->font());
-    if(isok)ui->pushButton->setFont(f);
-    qDebug()<<f;
-    update();
-    QFontMetrics met(this->font());
-    qDebug()<<"label height:"<<ui->label->height()<<", font height:"<<met.height();
-    qDebug()<<"ascent:"<<met.ascent()<<" ,descent:"<<met.descent()<<" ,overline pos:"<<met.overlinePos()
-           <<",cap height:"<<met.capHeight()<<",height:"<<met.boundingRect("HH").height()<<",tight height:"<<met.tightBoundingRect("HH").height();
+    if(isok)
+    {
+
+        ui->label->setFont(f);
+        ui->comboBox->setFont(f);
+        ui->pushButton_2->setFont(f);
+
+        qDebug()<<f;
+        update();
+        QFontMetrics met(this->font());
+        qDebug()<<"label height:"<<ui->label->height()<<", font height:"<<met.height();
+        qDebug()<<"ascent:"<<met.ascent()<<" ,descent:"<<met.descent()<<" ,overline pos:"<<met.overlinePos()
+               <<",cap height:"<<met.capHeight()<<",height:"<<met.boundingRect("HH").height()<<",tight height:"<<met.tightBoundingRect("HH").height();
+    }
 }
 
 void Form::onShowMessageBox()

@@ -1,0 +1,20 @@
+*{
+font-family:"Source Han Sans CN";color:#333333;font:20px ;font-weight:medium;
+}
+QLabel#label_2{
+font-weight:bold;
+}
+QLabel#label_3{
+font-weight:medium;
+}
+QLabel#label_4{
+font-weight:normal;
+}
+QDialog#FormShortCut{
+background:#fffff0;
+}
+
+QListWidget{
+background:#fffff0;
+}
+

@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>css1.css</file>
+        <file>css2.css</file>
     </qresource>
 </RCC>

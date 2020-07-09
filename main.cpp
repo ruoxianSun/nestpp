@@ -6,7 +6,7 @@
 #include <QDir>
 #include <memory>
 #include "CMyStyle.h"
-#include "css.h"
+#include "FormShortCut.h"
 void readCSSfile(QString filename)
 {
     QFile file(filename);
@@ -32,24 +32,30 @@ void addFont()
 
     }
 }
-void testCss(){
-
-    StyleSheet ss;
-    int num=ss.parse(qApp->styleSheet().toStdString());
-    qDebug()<<"num:"<<num;
-}
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
     addFont();
-    readCSSfile(":/css1.css");
+    readCSSfile(":/css2.css");
+#define TEST
+#ifdef TEST
+        FormShortCut sc;
+        sc.show();
+//    auto item=new FormShortCutItem();
+//    item->setObjectName("titel");
+//    item->layout()->setContentsMargins(30,0,0,0);
+//    item->layout()->setSpacing(350);
+//    item->key->setText("value");
+//    item->value->setText("value");
+//    QFont f("Microsoft YaHei");
+//    f.setWeight(1);
+//    f.setItalic(true);
+//    item->key->setFont(f);
+//    item->show();
+#else
     MainWindow w;
     w.show();
-//    testCss();
-//    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
-//    auto styel=new CMyStyle;
-//    QApplication::setStyle(styel);
-//    qDebug()<<a.style()<<",,,,,"<<a.styleSheet();
+#endif
     return a.exec();
 }

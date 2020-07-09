@@ -37,6 +37,7 @@ SOURCES += \
         CMyStyle.cpp \
         CPushButton.cpp \
         CTreeView.cpp \
+        FormShortCut.cpp \
         form.cpp \
         formitem.cpp \
         main.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
         CMyStyle.h \
         CPushButton.h \
         CTreeView.h \
+        FormShortCut.h \
         css.h \
         ctest.hpp \
         form.h \
@@ -59,6 +61,7 @@ HEADERS += \
 
 FORMS += \
         CMyMessageBox.ui \
+        FormShortCut.ui \
         form.ui \
         formitem.ui \
         mainwindow.ui
@@ -72,4 +75,6 @@ RESOURCES += \
     resource/image.qrc \
     resource/shader.qrc \
     resource/style.qrc
+
+DISTFILES +=
 

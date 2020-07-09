@@ -5,6 +5,7 @@
 #include <QStylePainter>
 #include <QApplication>
 #include <QStyleOption>
+#include <QDebug>
 CCombobox::CCombobox(QWidget *parent) : QComboBox(parent)
 {
     setItemDelegate(new CComboBoxDelegate(view()));
@@ -28,6 +29,8 @@ void CCombobox::paintEvent(QPaintEvent *e)
 
     // draw the icon and text
     painter.drawControl(QStyle::CE_ComboBoxLabel, opt);
+
+//    qDebug()<<font();
 }
 
 void CComboBoxDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
