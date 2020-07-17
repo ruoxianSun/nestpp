@@ -8,6 +8,7 @@
 #include "CMyStyle.h"
 #include "FormShortCut.h"
 #include <qtstylesheethelper.h>
+#include <CTestConcurrent.h>
 void readCSSfile(QString filename)
 {
     QFile file(filename);
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
     QtCss::QtStyleSheetHelper::helper()->setStyleSheet(a.styleSheet());
 //#define TEST
 #ifdef TEST
+    CTestConcurrent ctc;
         FormShortCut sc;
         sc.show();
 //    auto item=new FormShortCutItem();

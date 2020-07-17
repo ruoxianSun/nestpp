@@ -92,7 +92,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 
 void MainWindow::paintEvent(QPaintEvent *e)
 {
-return QMainWindow::paintEvent(e);
+//return QMainWindow::paintEvent(e);
     QFont f;
     f.setFamily("PingFang SC");
     f.setPointSize(17);

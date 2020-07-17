@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core-private gui-private quickwidgets
+QT       += core-private gui-private quickwidgets concurrent
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets-private
 
@@ -36,6 +36,7 @@ SOURCES += \
         CMyMessageBox.cpp \
         CMyStyle.cpp \
         CPushButton.cpp \
+        CTestConcurrent.cpp \
         CTreeView.cpp \
         FormShortCut.cpp \
         form.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
         CMyMessageBox.h \
         CMyStyle.h \
         CPushButton.h \
+        CTestConcurrent.h \
         CTreeView.h \
         FormShortCut.h \
         css.h \

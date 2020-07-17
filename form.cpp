@@ -12,6 +12,8 @@
 #include <QStyledItemDelegate>
 #include "CMyMessageBox.h"
 #include <QQuickItem>
+#include <QMenu>
+
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
@@ -21,6 +23,8 @@ Form::Form(QWidget *parent) :
 //    this->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     connect(ui->pushButton,SIGNAL(clicked(bool)),this,SLOT(onFont()));
     connect(ui->pushButton_2,SIGNAL(clicked(bool)),this,SLOT(onShowMessageBox()));
+    connect(ui->pushButton_3,SIGNAL(clicked(bool)),this,SLOT(onHelp()));
+
 
     ui->quickWidget->setSource(QUrl("qrc:/ButtonMessage.qml"));
     auto obj=ui->quickWidget->rootObject();
@@ -111,6 +115,16 @@ void Form::onFont()
 void Form::onShowMessageBox()
 {
     CMyMessageBox::warning(this,"MyMessage Box Test","this is a message box test ,tai jian dan le ya..........!!!!!!!!!!!!! ");
+}
+
+void Form::onHelp()
+{
+    QCursor cur=this->cursor();
+    QMenu *menu=new QMenu(this->parentWidget());
+    menu->addAction(tr("About"));
+    menu->addAction(tr("Shortcut"));
+    menu->exec(cur.pos());
+    delete menu;
 }
 
 void Form::paintEvent(QPaintEvent *e)
