@@ -1,6 +1,8 @@
 #include "formtableview.h"
 #include "ui_formtableview.h"
 #include <QStandardItemModel>
+#include "qtstylesheethelper.h"
+using namespace QtCss;
 FormTableView::FormTableView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FormTableView)
@@ -34,4 +36,76 @@ FormTableView::FormTableView(QWidget *parent) :
 FormTableView::~FormTableView()
 {
     delete ui;
+}
+
+QWidget *CCustomItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    if(index.column()==1)
+    {
+        auto combobox=new QComboBox(parent);
+        combobox->addItems(QStringList()<<"Continue"<<"Discreate");
+        combobox->setCurrentText(option.text);
+        return combobox;
+    }
+    else if(index.column()>1&&index.column()<index.model()->columnCount())
+    {
+        auto edit=new QLineEdit(parent);
+        edit->setText(option.text);
+        return edit;
+    }
+    else
+    {
+        return QStyledItemDelegate::createEditor(parent,option,index);
+    }
+}
+
+void CCustomItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    const QWidget *widget = option.widget;
+    QStyle *style = widget ? widget->style() : QApplication::style();
+    if(index.column()==1)
+    {
+        QStyleOptionComboBox*combox=new QStyleOptionComboBox;
+        combox->rect=option.rect.adjusted(3,3,-3,-3);
+        combox->currentText=option.text;
+        style->drawComplexControl(QStyle::CC_ComboBox,combox,painter,option.widget);
+    }
+    else if(index.column()>1&&index.column()<index.model()->columnCount())
+    {
+        QStyleOptionFrameV3 opt;
+        opt.rect=option.rect.adjusted(3,3,-3,-3);
+        style->drawPrimitive(QStyle::PE_PanelLineEdit,&opt,painter,widget);
+
+
+    }
+
+    // draw the text
+    if (!index.data().toString().isEmpty()) {
+        QStyleOptionViewItem opt = option;
+        initStyleOption(&opt, index);
+        opt.rect=option.rect.adjusted(3,3,-3,-3);
+
+        QRect textRect = style->proxy()->subElementRect(QStyle::SE_ItemViewItemText,  &opt, widget);
+        const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
+
+        textRect = textRect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
+        auto icon=index.data(Qt::DecorationRole);
+        auto ricon=qvariant_cast<QIcon>(icon);
+        if(icon.isValid())
+        {
+            textRect=textRect.adjusted(option.decorationSize.width()+4,0,0,0);
+        }
+        style->drawItemText(painter,textRect,
+                            Qt::AlignVCenter,option.palette,widget->isEnabled(),
+                            index.data().toString(),QPalette::Text);
+    }
+//    QStyleOptionViewItem*item=new QStyleOptionViewItem(option);
+//    item->displayAlignment=Qt::AlignVCenter|Qt::AlignHCenter;
+//    QStyledItemDelegate::paint(painter,*item,index);
+
+}
+
+void CCustomItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    editor->setGeometry(option.rect.adjusted(3,3,-3,-3));
 }
