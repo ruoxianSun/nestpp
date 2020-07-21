@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    form=new Form(this);
 }
 
 MainWindow::~MainWindow()
@@ -34,8 +33,6 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
     }break;
     case Qt::Key_D:
     {
-        form->setWindowFlag(Qt::Dialog);
-        form->show();
     }break;
     case Qt::Key_G:
     {

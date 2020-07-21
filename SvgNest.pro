@@ -41,6 +41,7 @@ SOURCES += \
         FormShortCut.cpp \
         form.cpp \
         formitem.cpp \
+        formtableview.cpp \
         main.cpp \
         mainwindow.cpp
 
@@ -59,6 +60,7 @@ HEADERS += \
         ctest.hpp \
         form.h \
         formitem.h \
+        formtableview.h \
         mainwindow.h
 
 FORMS += \
@@ -66,6 +68,7 @@ FORMS += \
         FormShortCut.ui \
         form.ui \
         formitem.ui \
+        formtableview.ui \
         mainwindow.ui
 
 # Default rules for deployment.

@@ -80,6 +80,7 @@ Form::Form(QWidget *parent) :
         ui->listWidget->addItem(item);
         ui->listWidget->setItemWidget(item,form);
     }
+
 }
 
 Form::~Form()

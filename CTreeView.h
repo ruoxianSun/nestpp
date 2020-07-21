@@ -9,7 +9,6 @@ class CTreeView : public QTreeView
 public:
     explicit CTreeView(QWidget *parent = nullptr) : QTreeView(parent)
     {
-
     }
     void drawRow(QPainter *painter, const QStyleOptionViewItem &option,
                  const QModelIndex &index) const;

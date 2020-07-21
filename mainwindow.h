@@ -26,7 +26,6 @@ protected:
     void paintEvent(QPaintEvent*e);
 private:
     Ui::MainWindow *ui;
-    Form*form;
     std::vector<npPolygon::Ptr> polygons,nfps;
     std::shared_ptr<CGlWidget> gls;
 public:
