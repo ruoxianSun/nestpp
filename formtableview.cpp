@@ -30,6 +30,13 @@ FormTableView::FormTableView(QWidget *parent) :
     {
         ui->tableView->setRowHeight(i,50);
     }
+    for(auto r=0;r<model->rowCount();r++)
+    {
+        for(auto c=0;c<model->columnCount();c++)
+        {
+            ui->tableView->openPersistentEditor(model->index(r,c));
+        }
+    }
     ui->tableView->setFocus(Qt::FocusReason::MouseFocusReason);
 }
 
@@ -61,6 +68,10 @@ QWidget *CCustomItemDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 
 void CCustomItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    QStyleOptionViewItem opt;
+    opt.rect=option.rect;
+
+    return QStyledItemDelegate::paint(painter,opt,index);
     const QWidget *widget = option.widget;
     QStyle *style = widget ? widget->style() : QApplication::style();
     if(index.column()==1)
@@ -107,5 +118,5 @@ void CCustomItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
 void CCustomItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    editor->setGeometry(option.rect.adjusted(3,3,-3,-3));
+    editor->setGeometry(option.rect.adjusted(6,6,-6,-6));
 }

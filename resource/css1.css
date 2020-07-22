@@ -95,3 +95,7 @@ CCombobox::down-arrow {
     image: url(:/image/downArrowGray.png);
 }
 
+FormTableView QTableView QLineEdit{
+    border:1px solid red;
+    border-radius:5px;
+}
